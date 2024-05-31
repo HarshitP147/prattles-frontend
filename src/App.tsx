@@ -12,7 +12,7 @@ function App() {
                 <h1 className='text-base-100 text-[2.2em] text-center pt-24'>MERN Chat app</h1>
                 <p className='text-white text-center'>A simple chat application built with MERN stack. This site is built with Typescript React and Daisy UI</p>
                 <p className='text-white text-center'>You can track the progress{ " " }
-                    <a href='https://github.com/HarshitP147/mern-chat-frontend' target='_blank' className='text-secondary underline'>here</a>
+                    <a href='https://github.com/HarshitP147/prattles-frontend' target='_blank' className='text-secondary underline'>here</a>
                 </p>
 
                 <h1 className='text-white text-[2em] text-center pt-44'>Count: { count }</h1>
