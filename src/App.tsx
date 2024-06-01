@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 
 
 function App() {
     const [count, setCount] = useState(0)
+
 
     if (import.meta.env.MODE === "production") {
         // if the app is in production, the user shall see this
@@ -24,14 +26,11 @@ function App() {
         )
     }
 
-
     // if in development, we see this
     return (
-        <>
-            <main>
-                <h1>Working for chat app</h1>
-            </main>
-        </>
+        <main className='h-[100vh] w-full bg-primary select-none'>
+            <Outlet />
+        </main>
     )
 
 }
