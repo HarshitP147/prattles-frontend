@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 
+
 export default function Auth() {
     const nav = useNavigate();
 
@@ -12,10 +13,12 @@ export default function Auth() {
             }
         })
             .then(res => res.json())
-            .then(data => {
+            .then(async data => {
                 localStorage.setItem("userId", data.userId)
                 localStorage.setItem("token", data.token)
                 localStorage.setItem("tokenExpiry", data.tokenExpiry)
+
+
                 nav("/chat");
             })
             .catch(err => { alert(err) })
