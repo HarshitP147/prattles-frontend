@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 
 import ChatContact from "../components/ChatContact";
 import UserCard from "../components/UserCard";
@@ -34,7 +34,7 @@ export default function Chat() {
     return (
         <main className="flex flex-row ">
             <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] ">
-                <UserCard name={name} />
+                <UserCard name={ name } />
                 { arr.map((ele, i) => {
                     return <ChatContact key={ i } />
                 }) }

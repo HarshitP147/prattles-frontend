@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
+import SocketProvider from './context/SocketContext'
 
 function App() {
     const [count, setCount] = useState(0)
@@ -28,9 +29,11 @@ function App() {
 
     // if in development, we see this
     return (
-        <div className='h-[100vh] w-full bg-primary select-none'>
-            <Outlet />
-        </div>
+        <SocketProvider>
+            <div className='h-[100vh] w-full bg-primary select-none'>
+                <Outlet />
+            </div>
+        </SocketProvider>
     )
 
 }
