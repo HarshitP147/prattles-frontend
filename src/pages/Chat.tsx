@@ -1,30 +1,17 @@
 import { useEffect, useState } from "react";
 
-import ChatList from "../components/ChatList";
-
-const imageUrltoBase64 = async (url: string) => {
-    const data = await fetch(url);
-    const blob = await data.blob()
-    return new Promise<string | ArrayBuffer | null>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob)
-        reader.onload = () => {
-            const base64data = reader.result;
-            resolve(base64data);
-        };
-        reader.onerror = reject
-    })
-}
-
+import ChatContact from "../components/ChatContact";
+import UserCard from "../components/UserCard";
 
 const arr = [...Array(100).keys()]
 
 export default function Chat() {
     const [chatList, setChatList] = useState([]);
+    const [name, setName] = useState<string>('')
 
     useEffect(() => {
 
-        if (!localStorage.getItem('userId')) {
+        if (localStorage.getItem('userId')) {
             let userId = localStorage.getItem("userId");
             fetch(`http://localhost:8080/user/${userId}`, {
                 method: "GET",
@@ -33,31 +20,26 @@ export default function Chat() {
                 .then(async data => {
                     // data.profileUrl -> this contains the image URL
 
-                    const imageString = await imageUrltoBase64(data.profileUrl)!
+                    localStorage.setItem("imageUrl", data.profileUrl);
 
-                    localStorage.setItem("imageUrl", imageString);
+                    setName(data.name);
 
                     setChatList(data.chats);
                 })
         }
-
-
     }, [])
 
 
 
     return (
         <main className="flex flex-row ">
-            <div className="h-[100vh] w-[20em] overflow-y-scroll">
+            <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] ">
+                <UserCard name={name} />
                 { arr.map((ele, i) => {
-                    return <h1 className="text-info">The chat person will come here</h1>
+                    return <ChatContact key={ i } />
                 }) }
-                {/* <ChatList chatList={ chatList } /> */ }
             </div>
-            <div className="divider " />
             <section className="">
-                <h1 className="text-secondary text-[1.5em]">This is the actual section where the chats come in</h1>
-                <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </section>
         </main>
     )

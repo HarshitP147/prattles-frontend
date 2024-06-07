@@ -13,11 +13,10 @@ export default function Auth() {
             }
         })
             .then(res => res.json())
-            .then(async data => {
+            .then(data => {
                 localStorage.setItem("userId", data.userId)
                 localStorage.setItem("token", data.token)
                 localStorage.setItem("tokenExpiry", data.tokenExpiry)
-
 
                 nav("/chat");
             })
