@@ -1,9 +1,9 @@
-
+import { useState } from "react";
+import { createPortal } from "react-dom";
 import { HiUserAdd } from "react-icons/hi";
 import { IoSettingsSharp } from "react-icons/io5";
 
 import NewUserDialog from "./NewUserDialog";
-
 
 function showDialog() {
     const ele = document.getElementById('newUserModal')! as HTMLDialogElement;
@@ -12,6 +12,7 @@ function showDialog() {
 
 
 export default function UserCard({ name }: { name: string }) {
+
     return (
         <>
             <div className="flex justify-evenly items-center py-4">
@@ -31,7 +32,10 @@ export default function UserCard({ name }: { name: string }) {
                 <button className="w-full cursor-pointer" onClick={ showDialog } >
                     <HiUserAdd className=" h-8 w-full hover:bg-base-100 text-base-300 hover:text-black  transition-colors cursor-pointer" />
                 </button>
-                <NewUserDialog />
+                { createPortal(
+                    <NewUserDialog />,
+                    document.getElementById("modal-root")!
+                ) }
             </div>
         </>
     )
