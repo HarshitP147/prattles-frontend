@@ -16,9 +16,10 @@ export default function FirstMessage(props: PeopleSearchType) {
     }, [])
 
     function startChatting() {
+        console.dir(props.userId);
         socket.emit('newChat', {
             from: localStorage.getItem("userId"),
-            to: props._id,
+            to: props.userId,
             message: message
         })
     }

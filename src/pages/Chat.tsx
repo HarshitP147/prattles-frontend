@@ -5,31 +5,26 @@ import UserCard from "../components/UserCard";
 
 import { SocketContext } from "../context/SocketContext";
 
-// const arr = [...Array(100).keys()]
+const arr = [...Array(100).keys()]
 
 export default function Chat() {
     const { socket } = useContext(SocketContext);
 
-    const [chatList, setChatList] = useState<any[]>([]);
+    const [chatList, setChatList] = useState([]);
     const [name, setName] = useState<string>('')
 
     useEffect(() => {
-        if (localStorage.getItem('userId')) {
-            const userId = localStorage.getItem("userId");
-            fetch(`http://localhost:8080/user/${userId}`, {
-                method: "GET",
+        const userId = localStorage.getItem("userId");
+        fetch(`http://localhost:8080/user/${userId}`, {
+            method: "GET",
+        })
+            .then(res => res.json())
+            .then(async data => {
+                localStorage.setItem("imageUrl", data.profileUrl);
+                setName(data.name);
+                setChatList(data.chats);
             })
-                .then(res => res.json())
-                .then(async data => {
-                    // data.profileUrl -> this contains the image URL
 
-                    localStorage.setItem("imageUrl", data.profileUrl);
-
-                    setName(data.name);
-
-                    setChatList(data.chats);
-                })
-        }
     }, [])
 
     useEffect(() => {

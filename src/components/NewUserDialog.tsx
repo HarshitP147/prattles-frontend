@@ -12,7 +12,7 @@ import type { PeopleSearchType } from "../type";
 export default function NewUserDialog() {
     const [query, setQuery] = useState<string>('');
     const [searchResults, setResults] = useState<PeopleSearchType[]>([]);
-    const [newUser, setNewUser] = useState<PeopleSearchType>({ _id: '', avatarUrl: '', email: '', name: '' });
+    const [newUser, setNewUser] = useState<PeopleSearchType>({ userId: '', avatarUrl: '', email: '', name: '' });
 
     const { socket } = useContext(SocketContext)
 
@@ -59,6 +59,7 @@ export default function NewUserDialog() {
                             <div className=" ml-[auto] text-center  text-zinc-500">Couldn't find anyone with that email</div>
                             :
                             searchResults.map((people, i) => {
+                                console.dir(people.userId);
                                 return (
                                     <li key={ i } onClick={ () => startNewChat(people) } className="my-2 h-14 items-center px-4 py-2 transition hover:cursor-pointer flex mx-4 hover:bg-info rounded-xl" >
                                         <img className="h-full rounded-full" src={ people.avatarUrl } alt={ `${people.email}'s profile image` } />

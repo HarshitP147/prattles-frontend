@@ -1,5 +1,5 @@
 export type PeopleSearchType = {
-    _id: string
+    userId: string
     name: string,
     email: string,
     avatarUrl: string,
