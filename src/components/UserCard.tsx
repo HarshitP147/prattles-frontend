@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createPortal } from "react-dom";
 import { HiUserAdd } from "react-icons/hi";
 import { IoSettingsSharp } from "react-icons/io5";
@@ -18,7 +17,7 @@ export default function UserCard({ name }: { name: string }) {
             <div className="flex justify-evenly items-center py-4">
                 <div className="avatar ">
                     <div className="w-14 rounded-full">
-                        <img src={ localStorage.getItem("imageUrl")! } />
+                        <img src={ sessionStorage.getItem("imageUrl")! } />
                     </div>
                 </div>
 

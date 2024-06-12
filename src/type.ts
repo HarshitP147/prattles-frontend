@@ -4,3 +4,10 @@ export type PeopleSearchType = {
     email: string,
     avatarUrl: string,
 }
+
+export type ChatType = {
+    _id: string,
+    chatId: string,
+    chatType: "single" | "group",
+    lastMessage: string
+}

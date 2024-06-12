@@ -14,9 +14,9 @@ export default function Auth() {
         })
             .then(res => res.json())
             .then(data => {
-                localStorage.setItem("userId", data.userId)
-                localStorage.setItem("token", data.token)
-                localStorage.setItem("tokenExpiry", data.tokenExpiry)
+                sessionStorage.setItem('userId',data.userId)
+                sessionStorage.setItem("token", data.token)
+                sessionStorage.setItem("tokenExpiry", data.tokenExpiry)
 
                 nav("/chat");
             })

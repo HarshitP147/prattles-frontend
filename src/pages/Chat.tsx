@@ -5,33 +5,34 @@ import UserCard from "../components/UserCard";
 
 import { SocketContext } from "../context/SocketContext";
 
-const arr = [...Array(100).keys()]
+import type { ChatType } from "../type";
 
 export default function Chat() {
     const { socket } = useContext(SocketContext);
 
-    const [chatList, setChatList] = useState([]);
+    const [chatList, setChatList] = useState<ChatType[]>([]);
     const [name, setName] = useState<string>('')
 
     useEffect(() => {
-        const userId = localStorage.getItem("userId");
+        const userId = sessionStorage.getItem("userId");
         fetch(`http://localhost:8080/user/${userId}`, {
             method: "GET",
         })
             .then(res => res.json())
             .then(async data => {
-                localStorage.setItem("imageUrl", data.profileUrl);
+                sessionStorage.setItem("imageUrl", data.profileUrl);
                 setName(data.name);
                 setChatList(data.chats);
             })
-
     }, [])
 
     useEffect(() => {
-        socket.on('updateChat', chats => {
-            setChatList(chats);
-        })
-    }, [socket]);
+        socket.on('updateChat', chatContactList => setChatList(chatContactList))
+
+        return () => {
+            socket.off('updateChat');
+        }
+    })
 
     return (
         <main className="flex flex-row ">
