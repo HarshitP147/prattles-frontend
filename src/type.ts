@@ -8,6 +8,22 @@ export type PeopleSearchType = {
 export type ChatType = {
     _id: string,
     chatId: string,
-    chatType: "single" | "group",
-    lastMessage: string
+    participants: [{
+        _id: string,
+        userId: string,
+        name: string,
+        avatarUrl: string
+    }],
+    lastMessage: {
+        _id: string,
+        sender: {
+            _id: string,
+            name: string,
+            avatarUrl: string
+        },
+        content: [{
+            text?: string,
+            images?: [string]
+        }]
+    }
 }

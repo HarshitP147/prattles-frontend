@@ -24,7 +24,7 @@ export default function UserCard({ name }: { name: string }) {
                 <span className="text-white text-xl h-fit  ">{ name }</span>
 
             </div>
-            <div className=" flex justify-around  ">
+            <div className=" flex justify-around  mb-4">
                 <button className="w-full cursor-pointer">
                     <IoSettingsSharp className="h-8 w-full hover:bg-base-100 text-base-300 hover:text-black transition-colors cursor-pointer" />
                 </button>

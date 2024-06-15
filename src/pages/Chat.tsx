@@ -39,11 +39,11 @@ export default function Chat() {
             <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] ">
                 <UserCard name={ name } />
                 { chatList.map((ele, i) => {
-                    console.dir(ele);
-                    return <ChatContact key={ i } />
+                    return <ChatContact { ...ele } key={ i } />
                 }) }
             </div>
             <section className="">
+
             </section>
         </main>
     )
