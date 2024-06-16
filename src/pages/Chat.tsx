@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState, } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import ChatContact from "../components/ChatContact";
 import UserCard from "../components/UserCard";
@@ -12,6 +13,22 @@ export default function Chat() {
 
     const [chatList, setChatList] = useState<ChatType[]>([]);
     const [name, setName] = useState<string>('')
+
+    const navigate = useNavigate();
+
+    const handleEscape = useCallback((ev: KeyboardEvent) => {
+        if (ev.key === "Escape") {
+            navigate("/chat");
+        }
+    }, [navigate])
+
+    useEffect(() => {
+        socket.on('updateChat', chatContactList => setChatList(chatContactList))
+
+        return () => {
+            socket.off('updateChat');
+        }
+    })
 
     useEffect(() => {
         const userId = sessionStorage.getItem("userId");
@@ -27,23 +44,24 @@ export default function Chat() {
     }, [])
 
     useEffect(() => {
-        socket.on('updateChat', chatContactList => setChatList(chatContactList))
+        document.addEventListener('keydown', handleEscape);
 
         return () => {
-            socket.off('updateChat');
+            document.removeEventListener("keydown", handleEscape);
         }
-    })
+    }, [handleEscape])
+
 
     return (
-        <main className="flex flex-row ">
+        <main className="flex flex-row items-stretch">
             <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] ">
                 <UserCard name={ name } />
                 { chatList.map((ele, i) => {
                     return <ChatContact { ...ele } key={ i } />
                 }) }
             </div>
-            <section className="">
-
+            <section className="flex-grow">
+                <Outlet />
             </section>
         </main>
     )

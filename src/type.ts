@@ -16,8 +16,10 @@ export type ChatType = {
     }],
     lastMessage: {
         _id: string,
+        createdAt: string,
         sender: {
             _id: string,
+            userId: string,
             name: string,
             avatarUrl: string
         },

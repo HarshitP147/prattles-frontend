@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.overflow-fade {
+    position: relative;
+    max-width: 100%;
+}
+
+.overflow-fade::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 100%;
+    background: linear-gradient(to left, #1a1a1a, rgba(255, 255, 255, 0));
+}

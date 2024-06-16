@@ -1,19 +1,33 @@
+import { NavLink } from "react-router-dom";
+
 import type { ChatType } from "../type"
 
 export default function ChatContact(props: ChatType) {
 
+    const chatId = props.chatId
+
+    let name = props.lastMessage.sender.name
+    let avatarUrl = props.lastMessage.sender.avatarUrl
+
+    const isLastMessageSelfSent = props.lastMessage.sender.userId === sessionStorage.getItem("userId");
+
+    if (!isLastMessageSelfSent) {
+        name = props.participants[0].name;
+        avatarUrl = props.participants[0].avatarUrl;
+    }
+
     return (
-        <div className="flex justify-between items-center transition-colors cursor-pointer py-4 px-8 h-fit border border-x-0 border-y-neutral hover:bg-info text-white">
-            <div className="avatar h-14 w-14 border">
-                <img src={ props.participants[0].avatarUrl } alt="" className="rounded-full" />
+        <NavLink to={ `/chat/${chatId}` } className="transition hover:bg-info hover:border-none border border-x-0 border-neutral px-5 py-4 flex items-center ">
+            <img src={ avatarUrl } alt={ `${name}'s profile picture` } className="rounded-full h-[4.5em] w-[4.5em]" />
+            <div className="ml-6 w-full overflow-hidden ">
+                <h1 className="text-base-100 text-2xl">{ name }</h1>
+                <span className="text-base-100 ">
+                    { isLastMessageSelfSent &&
+                        <span className="text-base-100 text-sm font-bold mr-1">You:</span>
+                    }
+                    <span className="whitespace-nowrap text-sm  " >{ props.lastMessage.content[0].text }</span>
+                </span>
             </div>
-            <div className="flex flex-col border ">
-
-                <h1>{ props.participants[0].name }</h1>
-
-                <h1>{ props.lastMessage.content[0].text }</h1>
-
-            </div>
-        </div>
+        </NavLink>
     )
 }
