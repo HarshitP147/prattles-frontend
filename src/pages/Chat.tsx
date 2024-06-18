@@ -1,68 +1,13 @@
-import { useContext, useEffect, useState, useCallback } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-
-import ChatContact from "../components/ChatContact";
-import UserCard from "../components/UserCard";
-
-import { SocketContext } from "../context/SocketContext";
-
-import type { ChatType } from "../type";
+import { useLoaderData } from "react-router-dom"
 
 export default function Chat() {
-    const { socket } = useContext(SocketContext);
+    const data = useLoaderData();
 
-    const [chatList, setChatList] = useState<ChatType[]>([]);
-    const [name, setName] = useState<string>('')
-
-    const navigate = useNavigate();
-
-    const handleEscape = useCallback((ev: KeyboardEvent) => {
-        if (ev.key === "Escape") {
-            navigate("/chat");
-        }
-    }, [navigate])
-
-    useEffect(() => {
-        socket.on('updateChat', chatContactList => setChatList(chatContactList))
-
-        return () => {
-            socket.off('updateChat');
-        }
-    })
-
-    useEffect(() => {
-        const userId = sessionStorage.getItem("userId");
-        fetch(`http://localhost:8080/user/${userId}`, {
-            method: "GET",
-        })
-            .then(res => res.json())
-            .then(async data => {
-                sessionStorage.setItem("imageUrl", data.profileUrl);
-                setName(data.name);
-                setChatList(data.chats);
-            })
-    }, [])
-
-    useEffect(() => {
-        document.addEventListener('keydown', handleEscape);
-
-        return () => {
-            document.removeEventListener("keydown", handleEscape);
-        }
-    }, [handleEscape])
-
+    console.log(data);
 
     return (
-        <main className="flex flex-row items-stretch">
-            <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] ">
-                <UserCard name={ name } />
-                { chatList.map((ele, i) => {
-                    return <ChatContact { ...ele } key={ i } />
-                }) }
-            </div>
-            <section className="flex-grow">
-                <Outlet />
-            </section>
-        </main>
+        <>
+            <h1 className="text-white">This is the chat page</h1>
+        </>
     )
 }
