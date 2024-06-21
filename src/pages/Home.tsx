@@ -53,16 +53,16 @@ export default function Home() {
 
 
     return (
-        <main className="flex flex-row items-stretch">
+        <div className="flex flex-row items-stretch">
             <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] ">
                 <UserCard name={ name } />
                 { chatList.map((ele, i) => {
                     return <ChatContact { ...ele } key={ i } />
                 }) }
             </div>
-            <section className="flex-grow">
+            <main className="flex-grow relative">
                 <Outlet />
-            </section>
-        </main>
+            </main>
+        </div>
     )
 }
