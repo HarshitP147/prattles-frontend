@@ -54,7 +54,7 @@ export default function Home() {
 
     return (
         <div className="flex flex-row items-stretch">
-            <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] ">
+            <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] border-r">
                 <UserCard name={ name } />
                 { chatList.map((ele, i) => {
                     return <ChatContact { ...ele } key={ i } />
