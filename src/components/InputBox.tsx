@@ -13,7 +13,6 @@ export default function InputBox(props: InputBoxProps) {
 
     buttonDisabled = props.message.length ? false : true;
 
-
     return (
         <div className="input rounded-none absolute bottom-0 z-20 px-0 flex items-center w-full bg-base-content ">
 

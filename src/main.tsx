@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
-import router from './router'
+import router from './misc/router'
 
 import googleOAuthConfig from '../google-oauth-setting.json' assert {
     type: "json"

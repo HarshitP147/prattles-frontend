@@ -6,12 +6,12 @@ import UserCard from "../components/UserCard";
 
 import { SocketContext } from "../context/SocketContext";
 
-import type { ChatType } from "../type";
+import type { ChatContactType } from "../misc/types";
 
 export default function Home() {
     const { socket } = useContext(SocketContext);
 
-    const [chatList, setChatList] = useState<ChatType[]>([]);
+    const [chatList, setChatList] = useState<ChatContactType[]>([]);
     const [name, setName] = useState<string>('')
 
     const navigate = useNavigate();

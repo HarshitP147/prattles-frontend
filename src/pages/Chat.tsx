@@ -1,25 +1,38 @@
-import { useState } from "react";
-import { useLoaderData, LoaderFunctionArgs } from "react-router-dom"
+import { useState, useContext } from "react";
+import { useLoaderData } from "react-router-dom"
 
 import InputBox from "../components/InputBox";
 
-export async function loader({ params }: LoaderFunctionArgs<any>): Promise<any> {
-    const userChats = await (await fetch(`http://localhost:8080/chat/${params.chatId}`)).json()
-    return userChats;
-}
+import { SocketContext } from "../context/SocketContext";
+
+import type { ChatsType } from '../misc/types'
+
 
 export default function Chat() {
     const [message, setMessage] = useState('');
+    const { socket } = useContext(SocketContext)
 
-    const data = useLoaderData();
+    const { messages } = useLoaderData() as ChatsType;
 
     function sendMessage() {
-        console.log(data);
+        socket.emit('message',)
     }
 
     return (
         <>
-
+            <div className="mt-10 border">
+                { messages.map((msg, i) => {
+                    const isMyMessage = msg.sender.userId === sessionStorage.getItem("userId")
+                    return (
+                        <div key={ i } className={ `chat ${isMyMessage ? 'chat-end' : 'chat-start'}` }>
+                            <div className={ `chat-bubble ${isMyMessage ? 'chat-bubble-secondary' : 'chat-bubble-success'} ` }>
+                                <span>{ msg.content.text }</span>
+                            </div>
+                            <span className="chat-footer text-base-300 text-xs">Status</span>
+                        </div>
+                    )
+                }) }
+            </div>
             <InputBox message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
         </>
     )

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 
 import { SocketContext } from "../context/SocketContext";
 
-import type { PeopleSearchType } from "../type";
+import type { PeopleSearchType } from "../misc/types";
 
 export default function FirstMessage(props: PeopleSearchType) {
     const [message, setMessage] = useState<string>('');

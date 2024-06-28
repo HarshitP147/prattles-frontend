@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 
-import type { ChatType } from "../type"
+import type { ChatContactType } from "../misc/types"
 
-export default function ChatContact(props: ChatType) {
+export default function ChatContact(props: ChatContactType) {
 
     const chatId = props.chatId
 
@@ -28,7 +28,7 @@ export default function ChatContact(props: ChatType) {
                     { isLastMessageSelfSent &&
                         <span className="text-base-100 text-sm font-bold mr-1">You:</span>
                     }
-                    <span className="whitespace-nowrap text-sm  " >{ props.lastMessage.content[0].text }</span>
+                    <span className="whitespace-nowrap text-sm  " >{ props.lastMessage.content.text }</span>
                 </span>
             </div>
         </NavLink>

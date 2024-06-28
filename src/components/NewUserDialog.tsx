@@ -7,7 +7,7 @@ import { SocketContext } from "../context/SocketContext";
 
 import FirstMessage from "./FirstMessage";
 
-import type { PeopleSearchType } from "../type";
+import type { PeopleSearchType } from "../misc/types";
 
 export default function NewUserDialog() {
     const [query, setQuery] = useState<string>('');

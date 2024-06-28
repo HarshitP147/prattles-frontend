@@ -1,11 +1,13 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 
-import App from "./App";
+import App from "../App";
 
-import Auth from "./pages/Auth";
-import Home from "./pages/Home";
-import Chat, { loader as chatLoader } from "./pages/Chat";
-import DefaultChat from "./pages/DefaultChat";
+import Auth from "../pages/Auth";
+import Home from "../pages/Home";
+import Chat from "../pages/Chat";
+import DefaultChat from "../pages/DefaultChat";
+
+import chatLoader from './chatLoader';
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route element={ <App /> }>
