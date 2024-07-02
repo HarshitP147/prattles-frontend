@@ -39,7 +39,14 @@ export default function Home() {
             .then(async data => {
                 sessionStorage.setItem("imageUrl", data.profileUrl);
                 setName(data.name);
-                setChatList(data.chats);
+            })
+
+        fetch(`http://localhost:8080/chat/${userId}`, {
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => {
+                setChatList(data.chats)
             })
     }, [])
 

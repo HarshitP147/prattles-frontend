@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { useLoaderData } from "react-router-dom"
+import { useState, useContext, useEffect, useCallback } from "react";
+import { useLoaderData, useParams } from "react-router-dom"
 
 import InputBox from "../components/InputBox";
 
@@ -12,17 +12,53 @@ export default function Chat() {
     const [message, setMessage] = useState('');
     const { socket } = useContext(SocketContext)
 
-    const { messages } = useLoaderData() as ChatsType;
+    const userId = sessionStorage.getItem('userId');
 
-    function sendMessage() {
-        socket.emit('message',)
-    }
+    const { messages } = useLoaderData() as ChatsType;
+    const chatId = useParams()
+
+    useEffect(() => {
+        socket.emit("joinRoom", chatId);
+
+        return () => {
+            socket.emit("leaveRoom", chatId);
+        }
+    }, [chatId, socket])
+
+    const sendMessage = useCallback(() => {
+
+        const messageInfo = {
+            chatId: chatId,
+            content: {
+                text: message
+            },
+            sender: userId
+        }
+
+        socket.emit('message', messageInfo);
+
+        setMessage('');
+    }, [message, userId, chatId, socket]);
+
+    useEffect(() => {
+        const pressEnter = (e: { key: string; }) => {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        };
+
+        window.addEventListener('keydown', pressEnter);
+
+        return () => {
+            window.removeEventListener('keydown', pressEnter);
+        }
+    }, [sendMessage])
 
     return (
         <>
             <div className="mt-10 border">
                 { messages.map((msg, i) => {
-                    const isMyMessage = msg.sender.userId === sessionStorage.getItem("userId")
+                    const isMyMessage = msg.sender.userId === userId
                     return (
                         <div key={ i } className={ `chat ${isMyMessage ? 'chat-end' : 'chat-start'}` }>
                             <div className={ `chat-bubble ${isMyMessage ? 'chat-bubble-secondary' : 'chat-bubble-success'} ` }>

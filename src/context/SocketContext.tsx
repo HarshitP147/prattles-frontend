@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import { Socket, io } from "socket.io-client";
 
 const socket = io(`http://localhost:8080`, {
@@ -14,6 +14,7 @@ export const SocketContext = createContext<SocketType>({
 })
 
 export default function SocketProvider({ children }: { children: React.ReactNode }) {
+
 
     return (
         <SocketContext.Provider value={ {
