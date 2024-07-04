@@ -5,7 +5,7 @@ import InputBox from "../components/InputBox";
 
 import { SocketContext } from "../context/SocketContext";
 
-import type { ChatsType } from '../misc/types'
+import { ChatsType } from "../misc/types";
 
 
 export default function Chat() {
@@ -26,7 +26,6 @@ export default function Chat() {
     }, [chatId, socket])
 
     const sendMessage = useCallback(() => {
-
         const messageInfo = {
             chatId: chatId,
             content: {

@@ -3,18 +3,12 @@ import { NavLink } from "react-router-dom";
 import type { ChatContactType } from "../misc/types"
 
 export default function ChatContact(props: ChatContactType) {
-
     const chatId = props.chatId
 
-    let name = props.lastMessage.sender.name
-    let avatarUrl = props.lastMessage.sender.avatarUrl
+    const name = props.participants[0].name
+    const avatarUrl = props.participants[0].avatarUrl
 
     const isLastMessageSelfSent = props.lastMessage.sender.userId === sessionStorage.getItem("userId");
-
-    if (!isLastMessageSelfSent) {
-        name = props.participants[0].name;
-        avatarUrl = props.participants[0].avatarUrl;
-    }
 
     return (
         <NavLink to={ `/chat/${chatId}` } className={ ({ isActive, isPending, }) =>

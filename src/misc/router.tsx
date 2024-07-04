@@ -7,7 +7,7 @@ import Home from "../pages/Home";
 import Chat from "../pages/Chat";
 import DefaultChat from "../pages/DefaultChat";
 
-import chatLoader from './chatLoader';
+import messageLoader from './messageLoader';
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route element={ <App /> }>
@@ -15,7 +15,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 
         <Route path="/chat" element={ <Home /> } >
             <Route index={ true } element={ <DefaultChat /> } />
-            <Route path=":chatId" element={ <Chat /> } loader={ chatLoader } />
+            <Route path=":chatId" element={ <Chat /> } loader={ messageLoader } />
         </Route>
     </Route>
 ))

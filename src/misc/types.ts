@@ -31,16 +31,17 @@ export type ChatContactType = {
 }
 
 export type ChatsType = {
-    _id: string,
+    chatId: string,
     messages: [{
+        content: {
+            text: string,
+            images: []
+        },
         _id: string,
         sender: {
             _id: string,
             userId: string
         },
-        content: {
-            text: string,
-            images?: []
-        }
+        createdAt: string
     }]
 }

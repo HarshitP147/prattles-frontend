@@ -32,22 +32,26 @@ export default function Home() {
 
     useEffect(() => {
         const userId = sessionStorage.getItem("userId");
-        fetch(`http://localhost:8080/user/${userId}`, {
-            method: "GET",
-        })
-            .then(res => res.json())
-            .then(async data => {
-                sessionStorage.setItem("imageUrl", data.profileUrl);
-                setName(data.name);
+        async function fetchData() {
+            fetch(`http://localhost:8080/user/${userId}`, {
+                method: "GET",
             })
+                .then(res => res.json())
+                .then(async data => {
+                    sessionStorage.setItem("imageUrl", data.profileUrl);
+                    setName(data.name);
+                })
 
-        fetch(`http://localhost:8080/chat/${userId}`, {
-            method: "GET"
-        })
-            .then(res => res.json())
-            .then(data => {
-                setChatList(data.chats)
+            fetch(`http://localhost:8080/chat/${userId}`, {
+                method: "GET"
             })
+                .then(res => res.json())
+                .then(data => setChatList(data))
+        }
+
+        fetchData()
+
+
     }, [])
 
     useEffect(() => {
