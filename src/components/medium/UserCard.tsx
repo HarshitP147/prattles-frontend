@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { HiUserAdd } from "react-icons/hi";
 import { IoSettingsSharp } from "react-icons/io5";
 
-import NewUserDialog from "./NewUserDialog";
+import NewUserDialog from "../large/NewUserDialog";
 
 function showDialog() {
     const ele = document.getElementById('newUserModal')! as HTMLDialogElement;

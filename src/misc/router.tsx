@@ -15,7 +15,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 
         <Route path="/chat" element={ <Home /> } >
             <Route index={ true } element={ <DefaultChat /> } />
-            <Route path=":chatId" element={ <Chat /> } loader={ messageLoader } />
+            <Route path=":chatId" element={ <Chat /> } />
         </Route>
     </Route>
 ))

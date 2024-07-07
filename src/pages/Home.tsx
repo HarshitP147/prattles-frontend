@@ -1,15 +1,13 @@
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback,  } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import ChatContact from "../components/ChatContact";
-import UserCard from "../components/UserCard";
+import ChatContact from "../components/medium/ChatContact";
+import UserCard from "../components/medium/UserCard";
 
-import { SocketContext } from "../context/SocketContext";
 
 import type { ChatContactType } from "../misc/types";
 
 export default function Home() {
-    const { socket } = useContext(SocketContext);
 
     const [chatList, setChatList] = useState<ChatContactType[]>([]);
     const [name, setName] = useState<string>('')
@@ -23,14 +21,6 @@ export default function Home() {
     }, [navigate])
 
     useEffect(() => {
-        socket.on('updateChat', chatContactList => setChatList(chatContactList))
-
-        return () => {
-            socket.off('updateChat');
-        }
-    })
-
-    useEffect(() => {
         const userId = sessionStorage.getItem("userId");
         async function fetchData() {
             fetch(`http://localhost:8080/user/${userId}`, {
@@ -42,17 +32,17 @@ export default function Home() {
                     setName(data.name);
                 })
 
-            fetch(`http://localhost:8080/chat/${userId}`, {
-                method: "GET"
-            })
-                .then(res => res.json())
-                .then(data => setChatList(data))
+            // fetch(`http://localhost:8080/chat/${userId}`, {
+            //     method: "GET"
+            // })
+            //     .then(res => res.json())
+            //     .then(data => setChatList(data))
         }
 
         fetchData()
 
-
     }, [])
+
 
     useEffect(() => {
         document.addEventListener('keydown', handleEscape);

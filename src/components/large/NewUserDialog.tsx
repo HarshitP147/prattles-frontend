@@ -3,11 +3,11 @@ import { createPortal } from "react-dom";
 import { HiUserAdd } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
 
-import { SocketContext } from "../context/SocketContext";
+import { SocketContext } from "../../context/SocketContext";
 
-import FirstMessage from "./FirstMessage";
+import FirstMessage from "../medium/FirstMessage";
 
-import type { PeopleSearchType } from "../misc/types";
+import type { PeopleSearchType } from "../../misc/types";
 
 export default function NewUserDialog() {
     const [query, setQuery] = useState<string>('');
@@ -29,7 +29,7 @@ export default function NewUserDialog() {
             socket.off('userSearchResults');
             setQuery('');
         }
-    }, [])
+    }, [socket])
 
     function startNewChat(contact: PeopleSearchType) {
         // open a dialogue to enter the first message.

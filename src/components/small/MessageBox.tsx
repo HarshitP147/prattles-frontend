@@ -18,8 +18,6 @@ export default function InputBox(props: InputBoxProps) {
 
             <div className="tooltip h-full ml-4 -mr-2 w-auto " data-tip="Adding images is not functional yet!">
                 <BsImageFill className="h-full w-auto text-white" />
-                {/* <button className="">
-                </button> */}
             </div>
             <div className="divider-neutral divider divider-horizontal " />
             <input type="text" placeholder="Type your messge here..." value={ props.message } onChange={ e => props.setMessage(e.target.value) } className="flex-grow h-full text-white -ml-2 mr-2 px-2 border border-zinc-700" />

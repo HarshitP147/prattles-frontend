@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 
-import { SocketContext } from "../context/SocketContext";
+import { SocketContext } from "../../context/SocketContext";
 
-import type { PeopleSearchType } from "../misc/types";
+import type { PeopleSearchType } from "../../misc/types";
 
 export default function FirstMessage(props: PeopleSearchType) {
     const [message, setMessage] = useState<string>('');
@@ -16,11 +16,11 @@ export default function FirstMessage(props: PeopleSearchType) {
     }, [])
 
     function startChatting() {
-        socket.emit('newChat', {
-            from: sessionStorage.getItem("userId"),
-            to: props.userId,
-            message: message
-        })
+        // socket.emit('newChat', {
+        //     from: sessionStorage.getItem("userId"),
+        //     to: props.userId,
+        //     message: message
+        // })
     }
 
     return (

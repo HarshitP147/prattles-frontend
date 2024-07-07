@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-import type { ChatContactType } from "../misc/types"
+import type { ChatContactType } from "../../misc/types"
 
 export default function ChatContact(props: ChatContactType) {
     const chatId = props.chatId
