@@ -16,11 +16,11 @@ export default function FirstMessage(props: PeopleSearchType) {
     }, [])
 
     function startChatting() {
-        // socket.emit('newChat', {
-        //     from: sessionStorage.getItem("userId"),
-        //     to: props.userId,
-        //     message: message
-        // })
+        socket.emit('newChat', {
+            from: sessionStorage.getItem("userId"),
+            to: props.userId,
+            message: message
+        })
     }
 
     return (

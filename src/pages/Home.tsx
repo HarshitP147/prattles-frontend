@@ -1,13 +1,17 @@
-import { useEffect, useState, useCallback,  } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import ChatContact from "../components/medium/ChatContact";
 import UserCard from "../components/medium/UserCard";
 
+import { SocketContext } from "../context/SocketContext";
 
 import type { ChatContactType } from "../misc/types";
 
+const userId = sessionStorage.getItem("userId");
+
 export default function Home() {
+    const { socket } = useContext(SocketContext);
 
     const [chatList, setChatList] = useState<ChatContactType[]>([]);
     const [name, setName] = useState<string>('')
@@ -21,27 +25,25 @@ export default function Home() {
     }, [navigate])
 
     useEffect(() => {
-        const userId = sessionStorage.getItem("userId");
-        async function fetchData() {
-            fetch(`http://localhost:8080/user/${userId}`, {
-                method: "GET",
+        fetch(`http://localhost:8080/user/${userId}`, {
+            method: "GET",
+        })
+            .then(res => res.json())
+            .then(async data => {
+                sessionStorage.setItem("imageUrl", data.profileUrl);
+                setName(data.name);
             })
-                .then(res => res.json())
-                .then(async data => {
-                    sessionStorage.setItem("imageUrl", data.profileUrl);
-                    setName(data.name);
-                })
-
-            // fetch(`http://localhost:8080/chat/${userId}`, {
-            //     method: "GET"
-            // })
-            //     .then(res => res.json())
-            //     .then(data => setChatList(data))
-        }
-
-        fetchData()
-
     }, [])
+
+    useEffect(() => {
+        socket.emit('chatList', userId, (response: ChatContactType[]) => {
+            setChatList(response);
+        })
+
+        return () => {
+            socket.off('chatList');
+        }
+    })
 
 
     useEffect(() => {
@@ -57,9 +59,16 @@ export default function Home() {
         <div className="flex flex-row items-stretch">
             <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] border-r">
                 <UserCard name={ name } />
-                { chatList.map((ele, i) => {
-                    return <ChatContact { ...ele } key={ i } />
-                }) }
+                { chatList.length === 0 ?
+                    <div className=" mt-[50%] mx-auto text-center">
+                        <span className="loading loading-spinner loading-lg text-white text-center "></span>
+                    </div>
+                    :
+                    chatList.map((ele, i) => {
+                        return <ChatContact { ...ele } key={ i } />
+                    })
+
+                }
             </div>
             <main className="flex-grow relative">
                 <Outlet />

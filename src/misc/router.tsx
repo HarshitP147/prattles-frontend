@@ -7,7 +7,6 @@ import Home from "../pages/Home";
 import Chat from "../pages/Chat";
 import DefaultChat from "../pages/DefaultChat";
 
-import messageLoader from './messageLoader';
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route element={ <App /> }>
