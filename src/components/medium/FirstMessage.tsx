@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 
 import { SocketContext } from "../../context/SocketContext";
 
@@ -9,18 +9,16 @@ export default function FirstMessage(props: PeopleSearchType) {
 
     const { socket } = useContext(SocketContext);
 
-    useEffect(() => {
-        return () => {
-            setMessage('');
-        }
-    }, [])
 
     function startChatting() {
         socket.emit('newChat', {
             from: sessionStorage.getItem("userId"),
             to: props.userId,
             message: message
+        }, (response) => {
+            console.log(response);
         })
+        setMessage('');
     }
 
     return (

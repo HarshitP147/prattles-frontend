@@ -15,6 +15,7 @@ export default function Home() {
 
     const [chatList, setChatList] = useState<ChatContactType[]>([]);
     const [name, setName] = useState<string>('')
+    const [chatsLoading, setChatsLoading] = useState(true);;
 
     const navigate = useNavigate();
 
@@ -38,13 +39,13 @@ export default function Home() {
     useEffect(() => {
         socket.emit('chatList', userId, (response: ChatContactType[]) => {
             setChatList(response);
+            setChatsLoading(false);
         })
 
         return () => {
             socket.off('chatList');
         }
-    })
-
+    }, [socket])
 
     useEffect(() => {
         document.addEventListener('keydown', handleEscape);
@@ -59,7 +60,7 @@ export default function Home() {
         <div className="flex flex-row items-stretch">
             <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] border-r">
                 <UserCard name={ name } />
-                { chatList.length === 0 ?
+                { chatsLoading ?
                     <div className=" mt-[50%] mx-auto text-center">
                         <span className="loading loading-spinner loading-lg text-white text-center "></span>
                     </div>
@@ -70,7 +71,7 @@ export default function Home() {
 
                 }
             </div>
-            <main className="flex-grow relative">
+            <main className="flex-grow">
                 <Outlet />
             </main>
         </div>

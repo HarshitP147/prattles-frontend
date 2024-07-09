@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 export type PeopleSearchType = {
     userId: string
     name: string,
@@ -44,4 +46,14 @@ export type ChatsType = {
         },
         createdAt: string
     }]
+}
+
+export type InputBoxProps = {
+    message: string,
+    setMessage: Dispatch<SetStateAction<string>>,
+    sendMessage: () => void
+}
+
+export type MessagesProp = {
+    chatId: string,
 }

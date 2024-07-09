@@ -1,12 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import { BsImageFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
 
-interface InputBoxProps {
-    message: string,
-    setMessage: Dispatch<SetStateAction<string>>,
-    sendMessage: () => void
-}
+import type { InputBoxProps } from "../../misc/types";
 
 export default function InputBox(props: InputBoxProps) {
     let buttonDisabled = true
@@ -14,7 +9,7 @@ export default function InputBox(props: InputBoxProps) {
     buttonDisabled = props.message.length ? false : true;
 
     return (
-        <div className="input rounded-none absolute bottom-0 z-20 px-0 flex items-center w-full bg-base-content ">
+        <div className="input rounded-none px-0 flex bg-base-content">
 
             <div className="tooltip h-full ml-4 -mr-2 w-auto " data-tip="Adding images is not functional yet!">
                 <BsImageFill className="h-full w-auto text-white" />
