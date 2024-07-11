@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 
-import InputBox from "../components/small/InputBox"
+import InputBox from "../components/small/InputBox";
 import Messages from "../components/layout/Messages";
 
 export default function Chat() {
-    const { chatId } = useParams()
+    const { chatId } = useParams();
 
     const [message, setMessage] = useState('');
 
@@ -15,14 +15,14 @@ export default function Chat() {
 
     return (
         <>
-            <main className="border h-full">
-                <section className="border pt-8 border-blue-800 h-[10%] overflow-visible">
+            <div className="flex flex-col h-[100vh]   ">
+                <div className=" overflow-scroll h-full">
                     <Messages chatId={ chatId } />
-                </section>
-                <div className="relative mx-auto w-full z-10 top-2">
+                </div>
+                <div className="">
                     <InputBox message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
                 </div>
-            </main>
+            </div>
         </>
     )
 }

@@ -4,7 +4,7 @@ import type { MessagesProp } from "../../misc/types";
 
 let arr: number[] = [];
 
-for (let i = 0; i < 500; i++) {
+for (let i = 0; i < 100; i++) {
     arr.push(i);
 }
 
@@ -13,8 +13,8 @@ export default function Messages(props: MessagesProp) {
     const { chatId } = props;
 
     return (
-        <>
-            <h1 className='text-2xl text-white text-center'>Rendering chats for { chatId } </h1>
+        <section className='py-8  overflow-scroll'>
+            <h1 className='text-2xl text-white text-center mb-6'>Rendering chat messages for { chatId } </h1>
             { arr.map((_, i) => {
                 return (
                     <Fragment key={ i }>
@@ -29,7 +29,6 @@ export default function Messages(props: MessagesProp) {
                     </Fragment>
                 )
             }) }
-
-        </>
+        </section>
     )
 }

@@ -7,6 +7,7 @@ import UserCard from "../components/medium/UserCard";
 import { SocketContext } from "../context/SocketContext";
 
 import type { ChatContactType } from "../misc/types";
+import InputBox from "../components/small/InputBox";
 
 const userId = sessionStorage.getItem("userId");
 
@@ -57,7 +58,7 @@ export default function Home() {
 
 
     return (
-        <div className="flex flex-row items-stretch">
+        <div className="flex flex-row items-stretch h-full ">
             <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] border-r">
                 <UserCard name={ name } />
                 { chatsLoading ?
@@ -68,12 +69,11 @@ export default function Home() {
                     chatList.map((ele, i) => {
                         return <ChatContact { ...ele } key={ i } />
                     })
-
                 }
             </div>
-            <main className="flex-grow">
+            <div className="flex-grow">
                 <Outlet />
-            </main>
+            </div>
         </div>
     )
 }
