@@ -1,6 +1,6 @@
 import { ImGithub } from "react-icons/im";
 
-export default function DefaultChat() {
+export default function NoChatPage() {
     return (
         <div className=" h-full">
             <div className="relative top-[35%]">

@@ -15,7 +15,6 @@ export const SocketContext = createContext<SocketType>({
 
 export default function SocketProvider({ children }: { children: React.ReactNode }) {
 
-
     return (
         <SocketContext.Provider value={ {
             socket: socket

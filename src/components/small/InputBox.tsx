@@ -8,6 +8,12 @@ export default function InputBox(props: InputBoxProps) {
 
     buttonDisabled = props.message.length ? false : true;
 
+    window.addEventListener("keypress", ev => {
+        if (ev.key === "Enter") {
+            props.sendMessage()
+        }
+    })
+
     return (
         <div className="input rounded-none px-0 flex bg-base-content">
 

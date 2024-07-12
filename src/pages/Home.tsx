@@ -59,7 +59,7 @@ export default function Home() {
 
     return (
         <div className="flex flex-row items-stretch h-full ">
-            <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ffffff] scrollbar-track-[#1a1a1a] border-r">
+            <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary border-r border-r-base-300 ">
                 <UserCard name={ name } />
                 { chatsLoading ?
                     <div className=" mt-[50%] mx-auto text-center">

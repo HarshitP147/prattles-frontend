@@ -12,10 +12,12 @@ for (let i = 0; i < 100; i++) {
 export default function Messages(props: MessagesProp) {
     const { chatId } = props;
 
+    const { messages } = props.messages
+
     return (
-        <section className='py-8  overflow-scroll'>
+        <section className='py-8 '>
             <h1 className='text-2xl text-white text-center mb-6'>Rendering chat messages for { chatId } </h1>
-            { arr.map((_, i) => {
+            { messages.map((_, i) => {
                 return (
                     <Fragment key={ i }>
                         <div className="chat chat-start">

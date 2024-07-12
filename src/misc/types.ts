@@ -32,19 +32,18 @@ export type ChatContactType = {
     }]
 }
 
-export type ChatsType = {
-    chatId: string,
+export type ChatMessagesType = {
     messages: [{
         content: {
             text: string,
             images: []
         },
-        _id: string,
+        createdAt: string,
         sender: {
             _id: string,
             userId: string
         },
-        createdAt: string
+        _id: string,
     }]
 }
 
@@ -56,4 +55,5 @@ export type InputBoxProps = {
 
 export type MessagesProp = {
     chatId: string,
+    messages: ChatMessagesType
 }

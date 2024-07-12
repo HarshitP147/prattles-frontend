@@ -4,8 +4,8 @@ import App from "../App";
 
 import Auth from "../pages/Auth";
 import Home from "../pages/Home";
-import Chat from "../pages/Chat";
-import DefaultChat from "../pages/DefaultChat";
+import Chat, { loader as chatLoader } from "../pages/Chat";
+import NoChatPage from "../pages/NoChatPage";
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -13,8 +13,8 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path="/" element={ <Auth /> } />
 
         <Route path="/chat" element={ <Home /> } >
-            <Route index={ true } element={ <DefaultChat /> } />
-            <Route path=":chatId" element={ <Chat /> } />
+            <Route index={ true } element={ <NoChatPage /> } />
+            <Route path=":chatId" element={ <Chat /> } loader={ chatLoader } />
         </Route>
     </Route>
 ))
