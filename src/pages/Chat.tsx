@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useParams, useLoaderData } from "react-router-dom";
 
 
@@ -7,26 +7,25 @@ import Messages from "../components/layout/Messages";
 
 import { SocketContext } from "../context/SocketContext";
 
-import type { ChatMessagesType } from "../misc/types";
-
-export async function loader({ params }) {
-
-    const getMessages = fetch(`http://localhost:8080/chat/${params.chatId}`)
-        .then(res => res.json())
-
-
-    return getMessages;
-}
-
+import type { ChatLoaderType, MessageType } from "../misc/types";
 
 export default function Chat() {
     const { chatId } = useParams<string>();
 
+    const data = useLoaderData() as ChatLoaderType;
+
     const [message, setMessage] = useState('');
+    const [chatList, setChatList] = useState<MessageType[]>();
 
     const { socket } = useContext(SocketContext);
 
-    const chatMessages = useLoaderData() as ChatMessagesType;
+    useEffect(() => {
+        setChatList(data.messages);
+
+        return () => {
+            setChatList([]);
+        }
+    }, [data])
 
     function sendMessage() {
         const messageInfo = {
@@ -42,11 +41,11 @@ export default function Chat() {
 
     return (
         <>
-            <div className="flex flex-col h-[100vh]   ">
+            <div className="flex flex-col h-[100vh]  px-12 py-8 ">
                 <div className=" overflow-y-scroll scrollbar-thin scrollbar-thumb-accent scrollbar-track-primary  h-full">
-                    <Messages chatId={ chatId } messages={ chatMessages } />
+                    <Messages chatId={ chatId } messages={ chatList } />
                 </div>
-                <div className="">
+                <div>
                     <InputBox message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
                 </div>
             </div>

@@ -15,7 +15,7 @@ export default function InputBox(props: InputBoxProps) {
     })
 
     return (
-        <div className="input rounded-none px-0 flex bg-base-content">
+        <div className="input rounded-md px-0  flex bg-base-content">
 
             <div className="tooltip h-full ml-4 -mr-2 w-auto " data-tip="Adding images is not functional yet!">
                 <BsImageFill className="h-full w-auto text-white" />

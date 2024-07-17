@@ -32,28 +32,31 @@ export type ChatContactType = {
     }]
 }
 
-export type ChatMessagesType = {
-    messages: [{
-        content: {
-            text: string,
-            images: []
-        },
-        createdAt: string,
-        sender: {
-            _id: string,
-            userId: string
-        },
-        _id: string,
-    }]
-}
-
 export type InputBoxProps = {
     message: string,
     setMessage: Dispatch<SetStateAction<string>>,
     sendMessage: () => void
 }
 
-export type MessagesProp = {
+export type MessageType = {
+    content: {
+        text: string,
+        images: []
+    },
+    createdAt: string,
+    sender: {
+        _id: string,
+        userId: string
+    },
+    _id: string
+}
+
+export type ChatLoaderType = {
+    _id: string,
+    messages: MessageType[]
+}
+
+export type MessageProps = {
     chatId: string,
-    messages: ChatMessagesType
+    messages: MessageType[]
 }

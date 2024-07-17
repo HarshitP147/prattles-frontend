@@ -1,36 +1,38 @@
 import { Fragment } from 'react'
 
-import type { MessagesProp } from "../../misc/types";
+import type { MessageProps } from '../../misc/types';
 
-let arr: number[] = [];
 
-for (let i = 0; i < 100; i++) {
-    arr.push(i);
-}
 
 // this component shall contain the entire rendering of messages
-export default function Messages(props: MessagesProp) {
+export default function Messages(props: MessageProps) {
+
     const { chatId } = props;
 
-    const { messages } = props.messages
+    const messages = props.messages
+
+    let loading = messages === undefined ? true : false
 
     return (
         <section className='py-8 '>
             <h1 className='text-2xl text-white text-center mb-6'>Rendering chat messages for { chatId } </h1>
-            { messages.map((_, i) => {
-                return (
-                    <Fragment key={ i }>
-                        <div className="chat chat-start">
-                            <div className="chat-header">
-                                Obi-Wan Kenobi
-                                <time className="text-xs opacity-50">2 hours ago</time>
-                            </div>
-                            <div className="chat-bubble">You were the Chosen One!</div>
-                            <div className="chat-footer opacity-50">Seen</div>
-                        </div>
-                    </Fragment>
-                )
-            }) }
+            { loading ?
+                <span>Loading your chats </span>
+                :
+                <>
+                    <span className='text-white text-center text-xl'>Sender of these messages { messages[0].sender.userId }</span>
+                    { messages.map((msg, i) => {
+                        return (
+                            <Fragment key={ i }>
+                                <div className="chat chat-start">
+                                    <div className="chat-bubble">{ msg.content.text }</div>
+                                    <div className="chat-footer opacity-50">Seen</div>
+                                </div>
+                            </Fragment>
+                        )
+                    }) }
+                </>
+            }
         </section>
     )
 }
