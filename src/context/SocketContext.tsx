@@ -1,19 +1,15 @@
-import React, { createContext } from "react";
+import { createContext, ReactNode } from "react";
 import { Socket, io } from "socket.io-client";
 
 const socket = io(`http://localhost:8080`, {
-    withCredentials: true
+
 })
 
-interface SocketType {
-    socket: Socket
-}
-
-export const SocketContext = createContext<SocketType>({
+export const SocketContext = createContext({
     socket: socket
 })
 
-export default function SocketProvider({ children }: { children: React.ReactNode }) {
+export default function SocketProvider({ children }: { children: ReactNode }) {
 
     return (
         <SocketContext.Provider value={ {

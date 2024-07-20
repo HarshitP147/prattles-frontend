@@ -11,7 +11,7 @@ export default function Messages(props: MessageProps) {
 
     const messages = props.messages
 
-    let loading = messages === undefined ? true : false
+    const loading = messages === undefined ? true : false
 
     return (
         <section className='py-8 '>

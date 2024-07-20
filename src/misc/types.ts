@@ -1,5 +1,26 @@
 import { Dispatch, SetStateAction } from "react"
 
+export type State = {
+    email: string,
+    name: string,
+    userId: string,
+    imageUrl: string
+}
+
+export type Action = {
+    type: "UPSERT" | "CLEAR",
+    payload?: {
+        type: "USERID" | "USERDATA",
+        data: string | State
+    }
+}
+
+export type AuthType = {
+    state: State,
+    login: (token: string) => void,
+    logout: () => void
+}
+
 export type PeopleSearchType = {
     userId: string
     name: string,
