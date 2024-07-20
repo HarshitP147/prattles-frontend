@@ -1,12 +1,10 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 
 import AuthContext from "../context/AuthContext";
 
 
 export default function Auth() {
-    const nav = useNavigate();
 
     const { login } = useContext(AuthContext);
 
@@ -14,7 +12,6 @@ export default function Auth() {
         flow: "implicit",
         onSuccess: (tokenRespose) => {
             login(tokenRespose.access_token);
-            nav("/chat");
         },
         onError: (error) => {
             console.error(error);

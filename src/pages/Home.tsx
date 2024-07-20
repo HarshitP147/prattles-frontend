@@ -6,13 +6,11 @@ import UserCard from "../components/medium/UserCard";
 // import InputBox ̥̥from "../components/small/InputBox";
 
 import SocketProvider, { SocketContext } from "../context/SocketContext";
-import AuthContext from "../context/AuthContext";
 
 import type { ChatContactType } from "../misc/types";
 
 export default function Home() {
     const { socket } = useContext(SocketContext);
-    const { state } = useContext(AuthContext);
 
     const [contactList, setContactList] = useState<ChatContactType[]>([]);
     const [chatsLoading, setChatsLoading] = useState(true);;
@@ -24,11 +22,6 @@ export default function Home() {
             navigate("/chat");
         }
     }, [navigate])
-
-    useEffect(() => {
-
-        console.log(state);
-    })
 
 
     useEffect(() => {

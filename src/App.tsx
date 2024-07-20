@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import { RouterProvider } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import AuthProvider from './context/AuthProvider'
 
-import router from './misc/router'
+import AuthContext from './context/AuthContext'
 
 function App() {
     const [count, setCount] = useState(0)
 
+    const { state } = useContext(AuthContext);
 
     // if the app is in production, the user shall see this
     if (import.meta.env.MODE === "production") {
@@ -29,13 +30,11 @@ function App() {
         )
     }
 
-    // there needs to be a global auth state which manages the authentication of the app
-
     // if in development, we see this
     return (
         <AuthProvider>
             <div className='h-[100vh] w-full bg-primary select-none'>
-                <RouterProvider router={ router } />
+                <Outlet />
             </div>
         </AuthProvider>
     )

@@ -2,12 +2,15 @@ import { createContext } from "react";
 
 import type { State, Action, AuthType } from "../misc/types";
 
-export const initialAuthState: State = {
+const initialState = {
     email: '',
     imageUrl: '',
     name: '',
     userId: ''
 }
+
+const savedAuthState = localStorage.getItem('authState');
+export const initialAuthState = savedAuthState ? JSON.parse(savedAuthState) : initialState;
 
 const AuthContext = createContext<AuthType>({
     state: initialAuthState,
@@ -34,6 +37,11 @@ export function authReducer(state: State, action: Action): State {
                     }
             }
 
+            // set these values in the localStorage
+            const authStateString = JSON.stringify(newAuthState)
+
+            localStorage.setItem('authState', authStateString);
+
 
             return newAuthState;
 
@@ -48,61 +56,5 @@ export function authReducer(state: State, action: Action): State {
             };
     }
 }
-
-// export function authReducer(state: State, action: Action): State {
-
-//     switch (action.type) {
-//         case "LOGIN":
-//             // now the actual login
-
-//             // async function getUserData() {
-
-//             //     const userAuthRequest = await fetch(`http://localhost:8080/auth`, {
-//             //         method: "POST",
-//             //         headers: {
-//             //             "Authorization": `Bearer ${action.token}`
-//             //         }
-//             //     }).then(res => res.json())
-
-
-//             //     const userInfoRequest = await fetch(`http://localhost:8080/user/${userAuthRequest.userId}`).then(res => res.json())
-
-//             //     let newAuthState: State = {
-//             //         userId: userAuthRequest.userId as string,
-//             //         name: userInfoRequest.name as string,
-//             //         email: userInfoRequest.email as string,
-//             //         imageUrl: userInfoRequest.imageUrl
-//             //     };
-
-//             //     return newAuthState
-//             // }
-
-//             // let newAuthState: State;
-
-//             // getUserData().then(value => {
-//             //     newAuthState = {
-//             //         email: value.email,
-//             //         imageUrl: value.imageUrl,
-//             //         name: value.name,
-//             //         userId: value.userId
-//             //     }
-
-//             //     return newAuthState;
-//             // })
-
-
-
-//         case "LOGOUT":
-//             // now the actual logout
-//             const logoutState: State = {
-//                 email: '',
-//                 imageUrl: '',
-//                 name: '',
-//                 userId: ''
-//             }
-
-//             return logoutState;
-//     }
-// }
 
 export default AuthContext
