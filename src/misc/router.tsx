@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { createBrowserRouter, createRoutesFromElements, Outlet, Route, Navigate } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Outlet, Route } from "react-router-dom";
 
 import App from "../App";
 import Auth from "../pages/Auth";
@@ -9,36 +8,15 @@ import NoChatPage from "../pages/NoChatPage";
 
 import chatListLoader from "./chatListLoader";
 
-import AuthContext from "../context/AuthContext";
+import ProtectedRoute from "../components/small/ProtectedRoute";
+import RedirectIfAuthenticated from "../components/small/RedirectAuthenticated";
 
-// if not authenticated, protect the routes
-const ProtectedRoute = () => {
-    const { state } = useContext(AuthContext);
-    console.log('Protected route');
-    console.log(state);
-    if (state.userId.length === 0) {
-        return <Navigate to="/auth" replace={ true } />
-    }
-
-    return <Outlet />
-}
-
-// if authenticated, redirect to home page
-const RedirectIfAuthenticated = () => {
-    const { state } = useContext(AuthContext);
-    console.log('Home route');
-    console.log(state);
-    if (state.userId.length !== 0) {
-        return <Navigate to="/chat" replace={ true } />;
-    }
-    return <Auth />
-};
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={ <App /> }>
-        <Route path="/auth" element={ <RedirectIfAuthenticated /> } />
+        <Route path="/auth" element={ <RedirectIfAuthenticated children={ <Auth /> } /> } />
 
-        <Route path="/chat" element={ <ProtectedRoute /> } >
+        <Route path="/chat" element={ <ProtectedRoute children={ <Outlet /> } /> } >
             <Route element={ <Home /> }>
                 <Route index={ true } element={ <NoChatPage /> } />
                 <Route path=":chatId" element={ <Chat /> } loader={ chatListLoader } />

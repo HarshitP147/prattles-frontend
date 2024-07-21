@@ -1,20 +1,13 @@
-import { useEffect, useState, useCallback, useContext } from "react";
+import { useEffect, useCallback, } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import ChatContact from "../components/medium/ChatContact";
 import UserCard from "../components/medium/UserCard";
-// import InputBox ̥̥from "../components/small/InputBox";
+import ContactList from "../components/medium/ContactList";
 
-import SocketProvider, { SocketContext } from "../context/SocketContext";
+import SocketProvider from "../context/SocketContext";
 
-import type { ChatContactType } from "../misc/types";
 
 export default function Home() {
-    const { socket } = useContext(SocketContext);
-
-    const [contactList, setContactList] = useState<ChatContactType[]>([]);
-    const [chatsLoading, setChatsLoading] = useState(true);;
-
     const navigate = useNavigate();
 
     const handleEscape = useCallback((ev: KeyboardEvent) => {
@@ -38,15 +31,7 @@ export default function Home() {
             <div className="flex flex-row items-stretch h-full ">
                 <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary border-r border-r-base-300 ">
                     <UserCard />
-                    { chatsLoading ?
-                        <div className=" mt-[50%] mx-auto text-center">
-                            <span className="loading loading-spinner loading-lg text-white text-center "></span>
-                        </div>
-                        :
-                        contactList.map((ele, i) => {
-                            return <ChatContact { ...ele } key={ i } />
-                        })
-                    }
+                    <ContactList />
                 </div>
                 <div className="flex-grow">
                     <Outlet />

@@ -1,14 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import AuthProvider from './context/AuthProvider'
 
-import AuthContext from './context/AuthContext'
-
 function App() {
     const [count, setCount] = useState(0)
-
-    const { state } = useContext(AuthContext);
 
     // if the app is in production, the user shall see this
     if (import.meta.env.MODE === "production") {

@@ -1,21 +1,23 @@
 import { useState, useContext } from "react";
 
+import AuthContext from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
 
-import type { PeopleSearchType } from "../../misc/types";
+import type { ChatContactType, PeopleSearchType } from "../../misc/types";
 
 export default function FirstMessage(props: PeopleSearchType) {
     const [message, setMessage] = useState<string>('');
 
     const { socket } = useContext(SocketContext);
 
+    const { state } = useContext(AuthContext)
 
     function startChatting() {
         socket.emit('newChat', {
-            from: sessionStorage.getItem("userId"),
+            from: state.userId,
             to: props.userId,
             message: message
-        }, (response) => {
+        }, (response: ChatContactType[]) => {
             console.log(response);
         })
         setMessage('');
