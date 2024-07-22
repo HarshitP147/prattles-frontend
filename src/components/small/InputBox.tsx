@@ -1,5 +1,6 @@
 import { BsImageFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
+import { AnimatePresence, motion } from "framer-motion";
 
 import type { InputBoxProps } from "../../misc/types";
 
@@ -15,17 +16,27 @@ export default function InputBox(props: InputBoxProps) {
     })
 
     return (
-        <div className="input rounded-md px-0  flex bg-base-content">
+        <div className="input input-primary  rounded-md w-[55%] h-fit px-0  mx-auto  flex bg-base-content border">
 
-            <div className="tooltip h-full ml-4 -mr-2 w-auto " data-tip="Adding images is not functional yet!">
-                <BsImageFill className="h-full w-auto text-white" />
-            </div>
-            <div className="divider-neutral divider divider-horizontal " />
-            <input type="text" placeholder="Type your messge here..." value={ props.message } onChange={ e => props.setMessage(e.target.value) } className="flex-grow h-full text-white -ml-2 mr-2 px-2 border border-zinc-700" />
-            <button disabled={ buttonDisabled } onClick={ props.sendMessage }
-                className="w-fit h-full transition-colors text-white hover:bg-white hover:text-black focus:bg-white focus:outline-none focus:text-black p-2 disabled:bg-zinc-800 disabled:text-gray-300 ">
-                <IoSend className=" h-full w-full " />
+            <button className=" my-auto text-white p-[1rem] tooltip  transition-colors  " data-tip="Images are not supported yet" >
+                <BsImageFill className="scale-150" />
             </button>
+
+            <input type="text" value={ props.message } onChange={ e => props.setMessage(e.target.value) } placeholder="Message here" className=" w-full px-2    text-white" />
+            <AnimatePresence>
+                { !buttonDisabled && (
+                    <motion.button
+                        onClick={ props.sendMessage }
+                        initial={ { opacity: 0, } }
+                        animate={ { opacity: 1, } }
+                        exit={ { opacity: 0, } }
+                        transition={ { ease: "circInOut", duration: 0.2 } }
+                        className="my-auto mr-4 scale-150 transition-colors  text-base-300 hover:text-white "
+                    >
+                        <IoSend className="" />
+                    </motion.button>
+                ) }
+            </AnimatePresence>
 
         </div>
     )

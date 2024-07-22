@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 import ChatContact from "../small/ChatContact";
 
@@ -16,18 +16,16 @@ export default function ContactList() {
 
     const { state } = useContext(AuthContext)
 
-
     useEffect(() => {
         socket.emit("chatList", state.userId, (response: ChatContactType[]) => {
             setContactList(response)
-            console.log(response);
             setChatsLoading(false);
         })
 
         return () => {
             socket.removeListener('chatList');
         }
-    }, [socket])
+    }, [contactList, state.userId])
 
     return (
         <>
@@ -37,7 +35,7 @@ export default function ContactList() {
                 </div>
                 :
                 contactList.map((ele, i) => {
-                    return <ChatContact { ...ele } key={ i } />
+                    return <ChatContact { ...ele } selfUserId={ state.userId } key={ i } />
                 })
             }
         </>

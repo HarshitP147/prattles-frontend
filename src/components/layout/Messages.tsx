@@ -3,7 +3,6 @@ import { Fragment } from 'react'
 import type { MessageProps } from '../../misc/types';
 
 
-
 // this component shall contain the entire rendering of messages
 export default function Messages(props: MessageProps) {
 
@@ -20,7 +19,6 @@ export default function Messages(props: MessageProps) {
                 <span>Loading your chats </span>
                 :
                 <>
-                    <span className='text-white text-center text-xl'>Sender of these messages { messages[0].sender.userId }</span>
                     { messages.map((msg, i) => {
                         return (
                             <Fragment key={ i }>

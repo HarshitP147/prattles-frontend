@@ -29,28 +29,29 @@ export type PeopleSearchType = {
 }
 
 export type ChatContactType = {
-    _id: string,
+    selfUserId: string,
     chatId: string,
     lastMessage: {
-        _id: string,
+        content: {
+            text: string,
+            images?: []
+        },
         createdAt: string,
         sender: {
             _id: string,
             userId: string,
-            name: string,
-            avatarUrl: string
+            name: string
         },
-        content: {
-            text?: string,
-            images?: [string]
-        }
+        _id: string
     },
     participants: [{
-        _id: string,
-        userId: string,
+        avatarUrl: string,
+        email: string,
         name: string,
-        avatarUrl: string
-    }]
+        userId: string,
+        _id: string
+    }],
+    _id: string
 }
 
 export type InputBoxProps = {

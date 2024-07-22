@@ -18,6 +18,7 @@ export default function FirstMessage(props: PeopleSearchType) {
             to: props.userId,
             message: message
         }, (response: ChatContactType[]) => {
+            // we immediately get the list with new chat
             console.log(response);
         })
         setMessage('');

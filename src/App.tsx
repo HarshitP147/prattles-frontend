@@ -1,10 +1,15 @@
-import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { useState, useContext, useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import AuthProvider from './context/AuthProvider'
+import AuthContext from './context/AuthContext'
 
 function App() {
     const [count, setCount] = useState(0)
+
+    const { state } = useContext(AuthContext);
+
+    const nav = useNavigate();
 
     // if the app is in production, the user shall see this
     if (import.meta.env.MODE === "production") {
@@ -25,6 +30,16 @@ function App() {
             </main>
         )
     }
+
+
+    useEffect(() => {
+        if (state.userId === '') {
+            nav("/auth")
+        }
+
+
+        nav("/chat");
+    }, [state])
 
     // if in development, we see this
     return (

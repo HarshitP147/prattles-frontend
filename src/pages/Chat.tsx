@@ -43,7 +43,7 @@ export default function Chat() {
         <>
             <div className="flex flex-col h-[100vh]  px-12 py-8 ">
                 <div className=" overflow-y-scroll scrollbar-thin scrollbar-thumb-accent scrollbar-track-primary  h-full">
-                    <Messages chatId={ chatId } messages={ chatList } />
+                    <Messages chatId={ chatId as string } messages={ chatList as MessageType[] } />
                 </div>
                 <div>
                     <InputBox message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useDeferredValue, ChangeEvent, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { HiUserAdd } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
@@ -16,20 +16,25 @@ export default function NewUserDialog() {
 
     const { socket } = useContext(SocketContext)
 
-    useEffect(() => {
-        socket.emit('search', query)
-    }, [query, socket])
+    const userQuery = useDeferredValue(query);
 
     useEffect(() => {
-        socket.on('userSearchResults', (contacts) => {
+        const handleSearchResults = (contacts: PeopleSearchType[]) => {
             setResults(contacts);
-        })
+            console.timeEnd('search');
+        }
+
+        if (userQuery) {
+            console.time('search');
+            socket.emit('search', userQuery);
+            socket.on('userSearchResults', handleSearchResults);
+        }
 
         return () => {
-            socket.off('userSearchResults');
-            setQuery('');
+            socket.off('userSearchResults', handleSearchResults);
+            console.timeEnd('search');
         }
-    }, [socket])
+    }, [userQuery, socket])
 
     function startNewChat(contact: PeopleSearchType) {
         // open a dialogue to enter the first message.
