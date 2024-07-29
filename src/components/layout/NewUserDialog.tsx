@@ -21,18 +21,15 @@ export default function NewUserDialog() {
     useEffect(() => {
         const handleSearchResults = (contacts: PeopleSearchType[]) => {
             setResults(contacts);
-            console.timeEnd('search');
         }
 
         if (userQuery) {
-            console.time('search');
             socket.emit('search', userQuery);
             socket.on('userSearchResults', handleSearchResults);
         }
 
         return () => {
             socket.off('userSearchResults', handleSearchResults);
-            console.timeEnd('search');
         }
     }, [userQuery, socket])
 

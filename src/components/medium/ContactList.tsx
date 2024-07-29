@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import ChatContact from "../small/ChatContact";
 
@@ -8,8 +8,6 @@ import { SocketContext } from "../../context/SocketContext";
 import type { ChatContactType } from "../../misc/types";
 
 export default function ContactList() {
-    const [chatsLoading, setChatsLoading] = useState(true);
-
     const [contactList, setContactList] = useState<ChatContactType[]>([]);
 
     const { socket } = useContext(SocketContext);
@@ -17,15 +15,20 @@ export default function ContactList() {
     const { state } = useContext(AuthContext)
 
     useEffect(() => {
-        socket.emit("chatList", state.userId, (response: ChatContactType[]) => {
-            setContactList(response)
-            setChatsLoading(false);
+        socket.emit("chatList", state.userId);
+
+        socket.on('updateChatList', response => {
+            setContactList(response);
+            // send the socket server to join all the rooms
         })
 
         return () => {
-            socket.removeListener('chatList');
+            socket.emit('chatList');
         }
-    }, [contactList, state.userId])
+
+    }, [socket])
+
+    let chatsLoading = contactList.length === 0;
 
     return (
         <>

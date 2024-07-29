@@ -3,10 +3,10 @@ import { Fragment } from 'react'
 import type { MessageProps } from '../../misc/types';
 
 
-// this component shall contain the entire rendering of messages
-export default function Messages(props: MessageProps) {
+type PropType = MessageProps & { selfId: string }
 
-    const { chatId } = props;
+// this component shall contain the entire rendering of messages
+export default function Messages(props: PropType) {
 
     const messages = props.messages
 
@@ -14,17 +14,17 @@ export default function Messages(props: MessageProps) {
 
     return (
         <section className='py-8 '>
-            <h1 className='text-2xl text-white text-center mb-6'>Rendering chat messages for { chatId } </h1>
             { loading ?
                 <span>Loading your chats </span>
                 :
                 <>
                     { messages.map((msg, i) => {
+                        const isSelfMessage = msg.sender.userId === props.selfId
+
                         return (
                             <Fragment key={ i }>
-                                <div className="chat chat-start">
-                                    <div className="chat-bubble">{ msg.content.text }</div>
-                                    <div className="chat-footer opacity-50">Seen</div>
+                                <div className={ `my-2 chat ${isSelfMessage ? ' chat-end' : 'chat-start'} ` }>
+                                    <div className={ `chat-bubble text-white ${isSelfMessage ? ' chat-bubble-info' : 'chat-bubble-warning'}   text-primary-content` }>{ msg.content.text }</div>
                                 </div>
                             </Fragment>
                         )

@@ -1,53 +1,76 @@
-import { useState, useContext, useEffect } from "react";
-import { useParams, useLoaderData } from "react-router-dom";
+import { useState, useContext, useEffect } from 'react';
+import { useLoaderData, useParams } from 'react-router-dom';
 
+import InputBox from '../components/small/InputBox';
+import Messages from '../components/layout/Messages';
 
-import InputBox from "../components/small/InputBox";
-import Messages from "../components/layout/Messages";
+import AuthContext from '../context/AuthContext';
+import { SocketContext } from '../context/SocketContext';
 
-import { SocketContext } from "../context/SocketContext";
-
-import type { ChatLoaderType, MessageType } from "../misc/types";
+import type { MessageLoaderType, MessageType } from '../misc/types';
 
 export default function Chat() {
-    const { chatId } = useParams<string>();
+    const { chatId } = useParams()
 
-    const data = useLoaderData() as ChatLoaderType;
+    const chatMessageLoader = useLoaderData() as MessageLoaderType
 
     const [message, setMessage] = useState('');
-    const [chatList, setChatList] = useState<MessageType[]>();
+    const [messageSending, setSending] = useState(false);
+    const [chatMessages, setChatMessages] = useState<MessageType[]>([]);
 
+    const { state } = useContext(AuthContext)
     const { socket } = useContext(SocketContext);
 
     useEffect(() => {
-        setChatList(data.messages);
+        socket.emit('joinRoom', chatId);
+        setChatMessages(chatMessageLoader.messages);
 
         return () => {
-            setChatList([]);
+            setChatMessages([])
+            socket.emit('leaveRoom', chatId);
         }
-    }, [data])
+    }, [chatId])
 
-    function sendMessage() {
-        const messageInfo = {
-            sender: sessionStorage.getItem("userId"),
-            chatId: chatId,
+    useEffect(() => {
+        socket.on('newMessage', (response) => {
+            setChatMessages(list => {
+                return [...list, response]
+            })
+            setSending(false)
+        })
+
+        return () => {
+            socket.off('newMessage');
+        }
+    }, [socket])
+
+    async function sendMessage() {
+
+        if (!message.trim() || messageSending) return;
+
+        const messageContent = {
             content: {
-                text: message
-            }
+                text: message,
+            },
+            sender: state.userId,
+            chatId: chatId as string
         }
 
-        socket.emit('chat', messageInfo);
+
+        socket.emit('chat', messageContent);
+
+        setMessage('');
+        setSending(true);
     }
 
     return (
         <>
-            <div className="flex flex-col h-[100vh]  px-12 py-8 ">
-                <div className=" overflow-y-scroll scrollbar-thin scrollbar-thumb-accent scrollbar-track-primary  h-full">
-                    <Messages chatId={ chatId as string } messages={ chatList as MessageType[] } />
+            <div className='h-[100vh]  flex flex-col justify-end py-8 '>
+                <div className='flex-1 overflow-y-scroll scrollbar-thin scrollbar-thumb-info scrollbar-track-primary-content  px-4 ' >
+                    <Messages messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
                 </div>
-                <div>
-                    <InputBox message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
-                </div>
+
+                <InputBox sending={ messageSending } message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
             </div>
         </>
     )

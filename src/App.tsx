@@ -44,7 +44,7 @@ function App() {
     // if in development, we see this
     return (
         <AuthProvider>
-            <div className='h-[100vh] w-full bg-primary select-none'>
+            <div className='h-[100vh] w-full bg-primary-content select-none'>
                 <Outlet />
             </div>
         </AuthProvider>

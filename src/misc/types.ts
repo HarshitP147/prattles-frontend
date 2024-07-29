@@ -31,19 +31,6 @@ export type PeopleSearchType = {
 export type ChatContactType = {
     selfUserId: string,
     chatId: string,
-    lastMessage: {
-        content: {
-            text: string,
-            images?: []
-        },
-        createdAt: string,
-        sender: {
-            _id: string,
-            userId: string,
-            name: string
-        },
-        _id: string
-    },
     participants: [{
         avatarUrl: string,
         email: string,
@@ -55,6 +42,7 @@ export type ChatContactType = {
 }
 
 export type InputBoxProps = {
+    sending: boolean,
     message: string,
     setMessage: Dispatch<SetStateAction<string>>,
     sendMessage: () => void
@@ -73,7 +61,7 @@ export type MessageType = {
     _id: string
 }
 
-export type ChatLoaderType = {
+export type MessageLoaderType = {
     _id: string,
     messages: MessageType[]
 }
