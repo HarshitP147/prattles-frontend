@@ -11,4 +11,4 @@ export default function RedirectIfAuthenticated({ children }: { children: ReactN
         return <Navigate to="/chat" replace={ true } />;
     }
     return children
-};
+}

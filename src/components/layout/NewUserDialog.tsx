@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useDeferredValue, ChangeEvent, useMemo } from "react";
+import React, { useEffect, useState, useContext, useDeferredValue, } from "react";
 import { createPortal } from "react-dom";
 import { HiUserAdd } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
@@ -44,9 +44,9 @@ export default function NewUserDialog() {
 
     return (
         <dialog id="newUserModal" className="modal">
-            <div className="modal-box bg-white">
-                <h1 className="text-lg">Type the email of the user you want to start the chat with</h1>
-                <label className="input input-bordered flex items-center mt-3">
+            <div className="modal-box bg-white text-black">
+                <h1 className="text-lg text-primary-content ">Type the email of the user you want to start the chat with</h1>
+                <label className="input input-primary  bg-white  flex items-center mt-3">
                     <HiUserAdd className=" mr-4 h-[80%] w-fit" />
                     <input type="text" className=" h-full w-full" value={ query } onChange={ e => setQuery(e.target.value) } />
                     { query !== '' &&

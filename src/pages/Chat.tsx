@@ -1,5 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion'
+import { FaChevronDown } from "react-icons/fa6";
 
 import InputBox from '../components/small/InputBox';
 import Messages from '../components/layout/Messages';
@@ -29,7 +31,7 @@ export default function Chat() {
             setChatMessages([])
             socket.emit('leaveRoom', chatId);
         }
-    }, [chatId])
+    }, [chatId, socket, chatMessageLoader.messages])
 
     useEffect(() => {
         socket.on('newMessage', (response) => {
@@ -65,12 +67,25 @@ export default function Chat() {
 
     return (
         <>
-            <div className='h-[100vh]  flex flex-col justify-end py-8 '>
-                <div className='flex-1 overflow-y-scroll scrollbar-thin scrollbar-thumb-info scrollbar-track-primary-content  px-4 ' >
+            <div className='h-screen overflow-y-scroll' >
+                <div className=' overflow-y-scroll scrollbar scrollbar-thumb-info scrollbar-track-primary-content  px-6' >
                     <Messages messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
+
                 </div>
 
-                <InputBox sending={ messageSending } message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
+                { chatMessages.length !== 0 &&
+                    <>
+                        <AnimatePresence>
+                            <div className='sticky bottom-[6rem] z-20  mx-auto w-fit '>
+                                <FaChevronDown className=' rounded-full w-10 h-10 p-2 transition  hover:bg-white hover:text-black hover:cursor-pointer' />
+                            </div>
+                        </AnimatePresence>
+                        <div className='sticky z-20 bottom-6'>
+
+                            <InputBox sending={ messageSending } message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
+                        </div>
+                    </>
+                }
             </div>
         </>
     )

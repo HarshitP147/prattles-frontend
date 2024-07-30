@@ -33,7 +33,7 @@ export default function Home() {
                     <UserCard />
                     <ContactList />
                 </div>
-                <div className="flex-grow">
+                <div className="flex-1 ">
                     <Outlet />
                 </div>
             </div>

@@ -6,10 +6,10 @@ import type { InputBoxProps } from "../../misc/types";
 
 export default function InputBox(props: InputBoxProps) {
 
-    let buttonDisabled = props.message.length || props.sending ? false : true;
+    const buttonDisabled = props.message.length || props.sending ? false : true;
 
     return (
-        <div className="  rounded-md w-[55%] h-fit px-0 outline-none  focus:outline-dashed  mx-auto  flex bg-primary-content border border-neutral-content">
+        <div className=" rounded-md w-[55%] h-fit px-0 outline-none  focus:outline-dashed  mx-auto flex bg-primary-content border border-neutral-content">
 
             <button className=" my-auto text-white p-[1rem] tooltip  transition-colors  " data-tip="Images are not supported yet" >
                 <BsImageFill className="scale-150" />
@@ -34,7 +34,6 @@ export default function InputBox(props: InputBoxProps) {
                     </motion.button>
                 ) }
             </AnimatePresence>
-
         </div>
     )
 }

@@ -27,13 +27,10 @@ export default function UserCard() {
                     </div>
                 </div>
 
-                <span className="text-white text-xl h-fit  ">{ state.name }</span>
+                <span className="text-white text-xl h-fit ">{ state.name }</span>
 
             </div>
             <div className=" flex justify-around  mb-4">
-                <button className="w-full cursor-pointer">
-                    <IoSettingsSharp className="h-8 w-full hover:bg-base-100 text-base-300 hover:text-black transition-colors cursor-pointer" />
-                </button>
                 <button className="w-full cursor-pointer" onClick={ showDialog } >
                     <HiUserAdd className=" h-8 w-full hover:bg-base-100 text-base-300 hover:text-black  transition-colors cursor-pointer" />
                 </button>

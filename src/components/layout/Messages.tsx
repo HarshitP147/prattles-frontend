@@ -13,11 +13,11 @@ export default function Messages(props: PropType) {
     const loading = messages === undefined ? true : false
 
     return (
-        <section className='py-8 '>
+        <section className='py-8'>
             { loading ?
                 <span>Loading your chats </span>
                 :
-                <>
+                <div className='flex flex-col'>
                     { messages.map((msg, i) => {
                         const isSelfMessage = msg.sender.userId === props.selfId
 
@@ -29,7 +29,7 @@ export default function Messages(props: PropType) {
                             </Fragment>
                         )
                     }) }
-                </>
+                </div>
             }
         </section>
     )

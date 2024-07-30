@@ -28,7 +28,7 @@ export default function ContactList() {
 
     }, [socket])
 
-    let chatsLoading = contactList.length === 0;
+    const chatsLoading = contactList.length === 0;
 
     return (
         <>
