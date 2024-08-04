@@ -9,7 +9,7 @@ const initialState = {
     userId: ''
 }
 
-const savedAuthState = localStorage.getItem('authState');
+const savedAuthState = sessionStorage.getItem('authState');
 export const initialAuthState = savedAuthState ? JSON.parse(savedAuthState) : initialState;
 
 const AuthContext = createContext<AuthType>({
@@ -20,9 +20,9 @@ const AuthContext = createContext<AuthType>({
 
 export function authReducer(state: State, action: Action): State {
 
+    let newAuthState: State = state;
     switch (action.type) {
         case "UPSERT":
-            let newAuthState: State = state;
             // here we are sure that the user will send userId as new data
 
             switch (action.payload?.type) {
@@ -35,12 +35,12 @@ export function authReducer(state: State, action: Action): State {
                         ...action.payload?.data as State,
                         userId: state.userId,
                     }
+                    break;
             }
 
-            // set these values in the localStorage
-            const authStateString = JSON.stringify(newAuthState)
+            // set these values in the sessionStorage
 
-            localStorage.setItem('authState', authStateString);
+            sessionStorage.setItem('authState', JSON.stringify(newAuthState));
 
 
             return newAuthState;

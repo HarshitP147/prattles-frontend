@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, MutableRefObject, forwardRef } from 'react'
 
 import type { MessageProps } from '../../misc/types';
 
@@ -6,7 +6,7 @@ import type { MessageProps } from '../../misc/types';
 type PropType = MessageProps & { selfId: string }
 
 // this component shall contain the entire rendering of messages
-export default function Messages(props: PropType) {
+const Messages = forwardRef((props: PropType, ref) => {
 
     const messages = props.messages
 
@@ -29,8 +29,10 @@ export default function Messages(props: PropType) {
                             </Fragment>
                         )
                     }) }
+                    <div ref={ ref as MutableRefObject<HTMLDivElement> } />
                 </div>
             }
         </section>
     )
-}
+})
+export default Messages;

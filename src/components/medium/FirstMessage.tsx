@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
 
-import type { ChatContactType, PeopleSearchType } from "../../misc/types";
+import type { PeopleSearchType } from "../../misc/types";
 
 export default function FirstMessage(props: PeopleSearchType) {
     const [message, setMessage] = useState<string>('');
@@ -17,10 +17,7 @@ export default function FirstMessage(props: PeopleSearchType) {
             from: state.userId,
             to: props.userId,
             message: message
-        }, (response: ChatContactType[]) => {
-            // we immediately get the list with new chat
-            console.log(response);
-        })
+        });
         setMessage('');
     }
 

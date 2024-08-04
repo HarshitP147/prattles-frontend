@@ -1,11 +1,11 @@
 import { useEffect, useCallback, } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import UserCard from "../components/medium/UserCard";
+import UserCard from "../components/small/UserCard";
 import ContactList from "../components/medium/ContactList";
+import AddNew from "../components/small/AddNew";
 
 import SocketProvider from "../context/SocketContext";
-
 
 export default function Home() {
     const navigate = useNavigate();
@@ -28,11 +28,12 @@ export default function Home() {
 
     return (
         <SocketProvider>
-            <div className="flex flex-row items-stretch h-full ">
-                <div className="h-[100vh] w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-info scrollbar-track-primary-content border-r border-r-base-neutral ">
+            <div className="flex flex-row items-stretch h-[100vh] ">
+                <section className=" w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-info scrollbar-track-primary-content border-r border-r-base-neutral ">
                     <UserCard />
                     <ContactList />
-                </div>
+                    <AddNew />
+                </section>
                 <div className="flex-1 ">
                     <Outlet />
                 </div>

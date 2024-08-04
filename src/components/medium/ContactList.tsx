@@ -8,7 +8,7 @@ import { SocketContext } from "../../context/SocketContext";
 import type { ChatContactType } from "../../misc/types";
 
 export default function ContactList() {
-    const [contactList, setContactList] = useState<ChatContactType[]>([]);
+    const [contactList, setContactList] = useState<ChatContactType[] | null>(null);
 
     const { socket } = useContext(SocketContext);
 
@@ -19,19 +19,18 @@ export default function ContactList() {
 
         socket.on('updateChatList', response => {
             setContactList(response);
-            // send the socket server to join all the rooms
         })
 
         return () => {
             socket.emit('chatList');
         }
 
-    }, [socket])
+    }, [socket, state.userId])
 
-    const chatsLoading = contactList.length === 0;
+    const chatsLoading = contactList === null;
 
     return (
-        <>
+        < >
             { chatsLoading ?
                 <div className=" mt-[50%] mx-auto text-center">
                     <span className="loading loading-spinner loading-lg text-white text-center "></span>

@@ -1,9 +1,9 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion, useInView } from 'framer-motion'
 import { FaChevronDown } from "react-icons/fa6";
 
-import InputBox from '../components/small/InputBox';
+import InputBox from '../components/medium/InputBox';
 import Messages from '../components/layout/Messages';
 
 import AuthContext from '../context/AuthContext';
@@ -23,9 +23,20 @@ export default function Chat() {
     const { state } = useContext(AuthContext)
     const { socket } = useContext(SocketContext);
 
+    const messagesRef = useRef<HTMLDivElement>(null);
+
+    const inView = useInView(messagesRef);
+
+    const scrollBottom = () => {
+        messagesRef.current?.scrollIntoView({
+            behavior: "smooth",
+        })
+    }
+
     useEffect(() => {
         socket.emit('joinRoom', chatId);
         setChatMessages(chatMessageLoader.messages);
+        scrollBottom();
 
         return () => {
             setChatMessages([])
@@ -39,6 +50,7 @@ export default function Chat() {
                 return [...list, response]
             })
             setSending(false)
+            scrollBottom();
         })
 
         return () => {
@@ -69,19 +81,32 @@ export default function Chat() {
         <>
             <div className='h-screen overflow-y-scroll' >
                 <div className=' overflow-y-scroll scrollbar scrollbar-thumb-info scrollbar-track-primary-content  px-6' >
-                    <Messages messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
+                    <Messages ref={ messagesRef } messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
 
                 </div>
 
                 { chatMessages.length !== 0 &&
                     <>
                         <AnimatePresence>
-                            <div className='sticky bottom-[6rem] z-20  mx-auto w-fit '>
-                                <FaChevronDown className=' rounded-full w-10 h-10 p-2 transition  hover:bg-white hover:text-black hover:cursor-pointer' />
+                            <div className='sticky bottom-[6rem] mx-auto w-fit  z-20'>
+                                { !inView &&
+                                    <motion.button onClick={ scrollBottom } animate={ {
+                                        opacity: 1,
+                                    } }
+                                        transition={ {
+                                            ease: "linear"
+                                        } }
+
+                                        exit={ {
+                                            opacity: 0
+                                        } }
+                                    >
+                                        <FaChevronDown className=' rounded-full w-10 h-10 p-2 transition  hover:bg-white hover:text-black hover:cursor-pointer' />
+                                    </motion.button>
+                                }
                             </div>
                         </AnimatePresence>
                         <div className='sticky z-20 bottom-6'>
-
                             <InputBox sending={ messageSending } message={ message } setMessage={ setMessage } sendMessage={ sendMessage } />
                         </div>
                     </>
