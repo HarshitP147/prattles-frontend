@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import ChatContact from "../small/ChatContact";
 
-import AuthContext from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
 
 import type { ChatContactType } from "../../misc/types";
@@ -36,9 +36,14 @@ export default function ContactList() {
                     <span className="loading loading-spinner loading-lg text-white text-center "></span>
                 </div>
                 :
-                contactList.map((ele, i) => {
-                    return <ChatContact { ...ele } selfUserId={ state.userId } key={ i } />
-                })
+                contactList.length === 0 ?
+                    <div className="my-[50%]  text-center">
+                        <span className="text-zinc-400 text-[0.9em]  ">You have no contacts yet!</span>
+                    </div>
+                    :
+                    contactList.map((ele, i) => {
+                        return <ChatContact { ...ele } selfUserId={ state.userId } key={ i } />
+                    })
             }
         </>
     )

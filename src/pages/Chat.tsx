@@ -6,7 +6,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import InputBox from '../components/medium/InputBox';
 import Messages from '../components/layout/Messages';
 
-import AuthContext from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { SocketContext } from '../context/SocketContext';
 
 import type { MessageLoaderType, MessageType } from '../misc/types';

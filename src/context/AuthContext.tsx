@@ -1,6 +1,9 @@
-import { createContext } from "react";
+import { ReactNode, useReducer, createContext } from "react";
 
-import type { State, Action, AuthType } from "../misc/types";
+// import AuthContext from "./AuthContext";
+import { authReducer } from "./authReducer";
+
+import type { AuthType } from "../misc/types";
 
 const initialState = {
     email: '',
@@ -10,51 +13,66 @@ const initialState = {
 }
 
 const savedAuthState = sessionStorage.getItem('authState');
-export const initialAuthState = savedAuthState ? JSON.parse(savedAuthState) : initialState;
+const initialAuthState = savedAuthState ? JSON.parse(savedAuthState) : initialState;
+
 
 const AuthContext = createContext<AuthType>({
     state: initialAuthState,
-    login: (token: string): void => { },
+    login: (): void => { },
     logout: (): void => { }
 })
 
-export function authReducer(state: State, action: Action): State {
 
-    let newAuthState: State = state;
-    switch (action.type) {
-        case "UPSERT":
-            // here we are sure that the user will send userId as new data
+function AuthProvider({ children }: { children: ReactNode }) {
+    const [auth, dispatchAuth] = useReducer(authReducer, initialAuthState);
 
-            switch (action.payload?.type) {
-                case "USERID":
-                    newAuthState.userId = action.payload?.data as string
-                    break;
 
-                case "USERDATA":
-                    newAuthState = {
-                        ...action.payload?.data as State,
-                        userId: state.userId,
-                    }
-                    break;
+    const login = async (token: string) => {
+        const userAuthRequest = await fetch(`http://localhost:8080/auth`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
             }
-
-            // set these values in the sessionStorage
-
-            sessionStorage.setItem('authState', JSON.stringify(newAuthState));
+        }).then(res => res.json())
 
 
-            return newAuthState;
+        dispatchAuth({
+            type: "UPSERT",
+            payload: {
+                type: "USERID",
+                data: userAuthRequest.userId as string
+            }
+        });
 
-        case "CLEAR":
-            // this is only for logging out
+        // now get the remaining user data
+        const userInfoRequest = await fetch(`http://localhost:8080/user/${userAuthRequest.userId}`).then(res => res.json())
 
-            return {
-                userId: '',
-                email: '',
-                name: '',
-                imageUrl: ''
-            };
+        dispatchAuth({
+            type: "UPSERT",
+            payload: {
+                type: "USERDATA",
+                data: userInfoRequest
+            }
+        })
     }
-}
 
-export default AuthContext
+    const logout = () => {
+        dispatchAuth({
+            type: "CLEAR"
+        })
+    }
+
+    const authContextValue = {
+        state: auth,
+        login: login,
+        logout: logout
+    }
+
+    return (
+        <AuthContext.Provider value={ authContextValue } >
+            { children }
+        </AuthContext.Provider>
+    )
+}
+export { AuthContext }
+export default AuthProvider

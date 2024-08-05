@@ -1,7 +1,7 @@
 import { useContext, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
-import AuthContext from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 // if not authenticated, protect the routes
 

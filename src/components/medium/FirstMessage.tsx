@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 
-import AuthContext from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
 
 import type { PeopleSearchType } from "../../misc/types";
@@ -19,6 +19,7 @@ export default function FirstMessage(props: PeopleSearchType) {
             message: message
         });
         setMessage('');
+        // TODO: Dynamic contactList update
     }
 
     return (

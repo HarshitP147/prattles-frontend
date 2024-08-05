@@ -9,8 +9,6 @@ const ChatContact = memo((props: ChatContactType) => {
     const name = props.participants[0].name
     const avatarUrl = props.participants[0].avatarUrl
 
-    // const isLastMessageSelfSent = props.lastMessage.sender.userId === props.selfUserId
-
     return (
         <NavLink to={ `/chat/${chatId}` } className={ ({ isActive, isPending, }) =>
             `transition border border-x-0 border-zinc-600 px-5 py-4 flex items-center

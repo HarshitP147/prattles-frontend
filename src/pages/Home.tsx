@@ -29,7 +29,7 @@ export default function Home() {
     return (
         <SocketProvider>
             <div className="flex flex-row items-stretch h-[100vh] ">
-                <section className=" w-[22em] overflow-y-scroll scrollbar-thin scrollbar-thumb-info scrollbar-track-primary-content border-r border-r-base-neutral ">
+                <section className=" w-[22em]  overflow-y-scroll scrollbar-thin scrollbar-thumb-info scrollbar-track-primary-content border-r border-r-base-neutral ">
                     <UserCard />
                     <ContactList />
                     <AddNew />

@@ -1,8 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import AuthProvider from './context/AuthProvider'
-import AuthContext from './context/AuthContext'
+import AuthProvider, { AuthContext } from './context/AuthContext'
 
 function App() {
     const [count, setCount] = useState(0)
@@ -37,9 +36,8 @@ function App() {
             nav("/auth")
         }
 
-
         nav("/chat");
-    }, [state])
+    }, [state, nav])
 
     // if in development, we see this
     return (
