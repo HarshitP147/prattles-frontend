@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect, useRef } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
-import { AnimatePresence, motion, useInView } from 'framer-motion'
+import { AnimatePresence, m as motion, useInView } from 'framer-motion'
 import { FaChevronDown } from "react-icons/fa6";
 
 import InputBox from '../components/medium/InputBox';
@@ -79,10 +79,9 @@ export default function Chat() {
 
     return (
         <>
-            <div className='h-screen overflow-y-scroll' >
-                <div className=' overflow-y-scroll scrollbar scrollbar-thumb-info scrollbar-track-primary-content  px-6' >
+            <div className='h-screen overflow-y-scroll scrollbar scrollbar-thumb-info scrollbar-track-primary-content ' >
+                <div className=' px-6' >
                     <Messages ref={ messagesRef } messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
-
                 </div>
 
                 { chatMessages.length !== 0 &&

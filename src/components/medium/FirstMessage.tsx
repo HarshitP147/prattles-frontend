@@ -19,7 +19,7 @@ export default function FirstMessage(props: PeopleSearchType) {
             message: message
         });
         setMessage('');
-        // TODO: Dynamic contactList update
+        socket.emit('chatList', state.userId);
     }
 
     return (

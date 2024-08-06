@@ -35,7 +35,7 @@ export default function Auth() {
                 <button onClick={ () => authorize() } disabled={ loading } className="flex mx-auto  transition hover:scale-105 active:scale-100 ">
                     { !loading ?
                         <>
-                            <span className=" bg-white px-2 rounded-l ">
+                            <span className=" bg-white p-2 rounded-l ">
                                 <FcGoogle className="h-full text-2xl" />
                             </span>
 

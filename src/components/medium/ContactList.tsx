@@ -1,31 +1,42 @@
-import { useContext, useEffect, useState } from "react";
+import { createRef, useCallback, useContext, useEffect, useState } from "react";
 
 import ChatContact from "../small/ChatContact";
 
 import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
+import AnimateList from "../../context/AnimateList";
 
 import type { ChatContactType } from "../../misc/types";
 
 export default function ContactList() {
-    const [contactList, setContactList] = useState<ChatContactType[] | null>(null);
 
     const { socket } = useContext(SocketContext);
 
     const { state } = useContext(AuthContext)
 
-    useEffect(() => {
-        socket.emit("chatList", state.userId);
+    const [contactList, setContactList] = useState<ChatContactType[] | null>(null);
 
-        socket.on('updateChatList', response => {
-            setContactList(response);
-        })
+    const updateContactListHandler = useCallback((response: ChatContactType[]) => {
+        setContactList(response);
+    }, [])
+
+    useEffect(() => {
+        const updatesInterval = setInterval(() => {
+
+            socket.emit("chatList", state.userId);
+
+            socket.on('updateChatList', updateContactListHandler)
+
+        }, 700)
 
         return () => {
-            socket.emit('chatList');
+            // socket.emit('chatList');
+            socket.off('updateChatList', updateContactListHandler);
+            clearInterval(updatesInterval);
         }
 
     }, [socket, state.userId])
+
 
     const chatsLoading = contactList === null;
 
@@ -41,9 +52,13 @@ export default function ContactList() {
                         <span className="text-zinc-400 text-[0.9em]  ">You have no contacts yet!</span>
                     </div>
                     :
-                    contactList.map((ele, i) => {
-                        return <ChatContact { ...ele } selfUserId={ state.userId } key={ i } />
-                    })
+                    <AnimateList>
+                        { contactList.map((ele, i) => {
+                            return (
+                                <ChatContact ref={ createRef() }   { ...ele } selfUserId={ state.userId } key={ i } />
+                            )
+                        }) }
+                    </AnimateList>
             }
         </>
     )
