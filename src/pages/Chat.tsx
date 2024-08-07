@@ -4,7 +4,7 @@ import { AnimatePresence, m as motion, useInView } from 'framer-motion'
 import { FaChevronDown } from "react-icons/fa6";
 
 import InputBox from '../components/medium/InputBox';
-import Messages from '../components/layout/Messages';
+import MessageList from '../components/layout/MessageList';
 
 import { AuthContext } from '../context/AuthContext';
 import { SocketContext } from '../context/SocketContext';
@@ -81,7 +81,7 @@ export default function Chat() {
         <>
             <div className='h-screen overflow-y-scroll scrollbar scrollbar-thumb-info scrollbar-track-primary-content ' >
                 <div className=' px-6' >
-                    <Messages ref={ messagesRef } messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
+                    <MessageList ref={ messagesRef } messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
                 </div>
 
                 { chatMessages.length !== 0 &&

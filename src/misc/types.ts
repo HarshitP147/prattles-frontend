@@ -58,7 +58,7 @@ export type MessageType = {
         _id: string,
         userId: string
     },
-    _id: string
+    _id: string,
 }
 
 export type MessageLoaderType = {

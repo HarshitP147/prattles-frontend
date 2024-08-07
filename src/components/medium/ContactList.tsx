@@ -1,10 +1,10 @@
 import { createRef, useCallback, useContext, useEffect, useState } from "react";
+import { AnimatedList } from "react-animated-list";
 
 import ChatContact from "../small/ChatContact";
 
 import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
-import AnimateList from "../../context/AnimateList";
 
 import type { ChatContactType } from "../../misc/types";
 
@@ -35,7 +35,7 @@ export default function ContactList() {
             clearInterval(updatesInterval);
         }
 
-    }, [socket, state.userId])
+    }, [socket, state.userId, updateContactListHandler])
 
 
     const chatsLoading = contactList === null;
@@ -52,13 +52,13 @@ export default function ContactList() {
                         <span className="text-zinc-400 text-[0.9em]  ">You have no contacts yet!</span>
                     </div>
                     :
-                    <AnimateList>
+                    <AnimatedList animation="grow">
                         { contactList.map((ele, i) => {
                             return (
-                                <ChatContact ref={ createRef() }   { ...ele } selfUserId={ state.userId } key={ i } />
+                                <ChatContact { ...ele } selfUserId={ state.userId } key={ i } />
                             )
                         }) }
-                    </AnimateList>
+                    </AnimatedList>
             }
         </>
     )
