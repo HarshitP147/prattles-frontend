@@ -28,7 +28,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
 
     const login = async (token: string) => {
-        const userAuthRequest = await fetch(`http://localhost:8080/auth`, {
+        const userAuthRequest = await fetch(`https://mern-chat-backend-emnj.onrender.com/auth`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -45,7 +45,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         });
 
         // now get the remaining user data
-        const userInfoRequest = await fetch(`http://localhost:8080/user/${userAuthRequest.userId}`).then(res => res.json())
+        const userInfoRequest = await fetch(`https://mern-chat-backend-emnj.onrender.com/user/${userAuthRequest.userId}`).then(res => res.json())
 
         dispatchAuth({
             type: "UPSERT",
