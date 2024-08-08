@@ -13,7 +13,6 @@
     "@react-oauth/google": "^0.12.1",
     "framer-motion": "^11.2.10",
     "javascript-time-ago": "^2.5.10",
-    "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-animated-list": "^0.1.4",
     "react-dom": "^18.2.0",

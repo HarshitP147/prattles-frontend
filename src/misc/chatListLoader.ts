@@ -20,7 +20,7 @@ async function chatListLoader(args: LoaderFunctionArgs) {
             }
             const responseJson = await chatListReqest.json();
             return responseJson;
-        } catch (err: Error) {
+        } catch (err: any) {
             if (err.name === 'AbortError') {
                 console.log('Fetch aborted');
             }

@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect, useRef, } from 'react';
+import { useState, useContext, useEffect, useRef, lazy, Suspense, } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import { AnimatePresence, m as motion, useInView } from 'framer-motion'
 import { FaChevronDown } from "react-icons/fa6";
 
 import InputBox from '../components/medium/InputBox';
-import MessageList from '../components/layout/MessageList';
+const MessageList = lazy(() => import('../components/layout/MessageList'));
 
 import { AuthContext } from '../context/AuthContext';
 import { SocketContext } from '../context/SocketContext';
@@ -82,7 +82,13 @@ export default function Chat() {
         <>
             <div className='h-screen overflow-y-scroll scrollbar scrollbar-thumb-info scrollbar-track-primary-content ' >
                 <div className=' px-6' >
-                    <MessageList ref={ messagesRef } messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
+                    <Suspense fallback={
+                        <div className=" mt-[50%] mx-auto text-center">
+                            <span className="loading loading-spinner loading-lg text-white text-center "></span>
+                        </div>
+                    }>
+                        <MessageList ref={ messagesRef } messages={ chatMessages } selfId={ state.userId } chatId={ chatId as string } />
+                    </Suspense>
                 </div>
 
                 { chatMessages.length !== 0 &&
