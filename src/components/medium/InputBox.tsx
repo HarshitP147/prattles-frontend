@@ -1,4 +1,5 @@
-import { BsImageFill } from "react-icons/bs";
+import { KeyboardEvent, useCallback } from "react";
+// import { BsImageFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -6,16 +7,25 @@ import type { InputBoxProps } from "../../misc/types";
 
 export default function InputBox(props: InputBoxProps) {
 
+    const handleEnterPress = useCallback((ev: KeyboardEvent<HTMLInputElement>) => {
+        if (ev.key === 'Enter') {
+            if (props.message !== '') {
+                props.sendMessage();
+            }
+        }
+    }, [props])
+
+
     const buttonDisabled = props.message.length || props.sending ? false : true;
 
     return (
         <div className=" rounded-md w-[55%] h-fit px-0 outline-none  focus:outline-dashed  mx-auto flex bg-primary-content border border-neutral-content">
 
-            <button className=" my-auto text-white p-[1rem] tooltip  transition-colors  " data-tip="Images are not supported yet" >
+            {/* <button className=" my-auto text-white p-[1rem] tooltip  transition-colors  " data-tip="Images are not supported yet" >
                 <BsImageFill className="scale-150" />
-            </button>
+            </button> */}
 
-            <input type="text" value={ props.message } onChange={ e => props.setMessage(e.target.value) } placeholder="Message here" className="flex-1 rounded-xl px-2 bg-primary-content focus:border-none focus:outline-none  text-white" />
+            <input type="text" value={ props.message } onChange={ e => props.setMessage(e.target.value) } onKeyDown={ handleEnterPress } placeholder="Message here" className="flex-1  rounded-xl px-2 py-4  bg-primary-content focus:border-none focus:outline-none  text-white" />
             <AnimatePresence>
                 { !buttonDisabled && (
                     <motion.button

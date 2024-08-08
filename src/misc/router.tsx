@@ -5,6 +5,7 @@ import Auth from "../pages/Auth";
 import Home from "../pages/Home";
 import Chat from "../pages/Chat";
 import NoChatPage from "../pages/NoChatPage";
+import Error from "../pages/Error";
 
 import chatListLoader from "./chatListLoader";
 
@@ -13,7 +14,7 @@ import RedirectIfAuthenticated from "../components/small/RedirectAuthenticated";
 
 
 const router = createBrowserRouter(createRoutesFromElements(
-    <Route path="/" element={ <App /> }>
+    <Route path="/" element={ <App /> } errorElement={ <Error /> } >
         <Route path="/auth" element={ <RedirectIfAuthenticated children={ <Auth /> } /> } />
 
         <Route path="/chat" element={ <ProtectedRoute children={ <Outlet /> } /> } >

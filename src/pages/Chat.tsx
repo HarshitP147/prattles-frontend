@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect, useRef, } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import { AnimatePresence, m as motion, useInView } from 'framer-motion'
 import { FaChevronDown } from "react-icons/fa6";
@@ -76,6 +76,7 @@ export default function Chat() {
         setMessage('');
         setSending(true);
     }
+
 
     return (
         <>

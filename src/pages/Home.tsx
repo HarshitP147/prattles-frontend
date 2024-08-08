@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import UserCard from "../components/small/UserCard";
 import ContactList from "../components/medium/ContactList";
-import AddNew from "../components/small/AddNew";
+import Options from "../components/small/Options";
 
 import SocketProvider from "../context/SocketContext";
 
@@ -32,7 +32,7 @@ export default function Home() {
                 <section className=" w-[22em] static  h-full  overflow-y-scroll scrollbar-thin scrollbar-thumb-info scrollbar-track-primary-content border-r border-r-base-neutral ">
                     <UserCard />
                     <ContactList />
-                    <AddNew />
+                    <Options />
                 </section>
                 <div className="flex-1 ">
                     <Outlet />

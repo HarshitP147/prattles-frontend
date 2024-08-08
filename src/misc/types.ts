@@ -70,3 +70,8 @@ export type MessageProps = {
     chatId: string,
     messages: MessageType[]
 }
+
+export type RouteErrorType = Error & {
+    statusText: string,
+    status: string
+}

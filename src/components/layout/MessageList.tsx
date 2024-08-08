@@ -37,11 +37,11 @@ const MessageList = memo(forwardRef((props: PropType, ref) => {
         return dateDay
     }
 
-    const renderMsgDate = (message: MessageType, nextMessage) => {
+    const renderMsgDate = (message: MessageType, nextMessage: MessageType) => {
         const dateTimeStamp = moment(message.createdAt, 'YYYY-MM-DD').valueOf();
         let nextMsgdateTimeStamp = 0;
         if (nextMessage) {
-            nextMsgdateTimeStamp = moment(nextMessage.created, 'YYYY-MM-DD').valueOf();
+            nextMsgdateTimeStamp = moment(nextMessage.createdAt, 'YYYY-MM-DD').valueOf();
         }
 
         if (msgDates.has(dateTimeStamp) || (nextMsgdateTimeStamp && nextMsgdateTimeStamp === dateTimeStamp)) {

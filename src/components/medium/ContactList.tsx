@@ -1,4 +1,4 @@
-import { createRef, useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AnimatedList } from "react-animated-list";
 
 import ChatContact from "../small/ChatContact";

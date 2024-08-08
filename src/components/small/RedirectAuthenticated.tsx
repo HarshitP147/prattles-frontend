@@ -1,5 +1,5 @@
 import { useContext, ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 
@@ -7,8 +7,11 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function RedirectIfAuthenticated({ children }: { children: ReactNode }) {
     const { state } = useContext(AuthContext);
+
+    const nav = useNavigate();
+
     if (state.userId.length !== 0) {
-        return <Navigate to="/chat" replace={ true } />;
+        nav("/chat");
     }
     return children
 }
