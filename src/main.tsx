@@ -7,16 +7,14 @@ import 'javascript-time-ago/load-all-locales'
 
 import router from './misc/router'
 
-import googleOAuthConfig from '../google-oauth-setting.json' assert {
-    type: "json"
-}
+const googleClientId = import.meta.env.GOOGLE_OAUTH_CLIENTID;
 
 import './index.css'
 
 
 ReactDOM.createRoot(document.getElementById('app-root')!).render(
     <React.StrictMode>
-        <GoogleOAuthProvider clientId={ googleOAuthConfig.web.client_id } >
+        <GoogleOAuthProvider clientId={ googleClientId } >
             <RouterProvider router={ router } />
         </GoogleOAuthProvider>
     </React.StrictMode>,
