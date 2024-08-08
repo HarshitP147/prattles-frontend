@@ -30,7 +30,7 @@ export default function Auth() {
         <main
             className="text-white h-full grid place-items-center  ">
             <div className="mb-12 ">
-                <img src="../../public/speech-bubble.png" className="h-32 w-full object-contain" />
+                <img src="/speech-bubble.png" className="h-32 w-full object-contain" />
                 <h1 className="text-3xl text-center my-12 ">Welcome to Prattles Chat App</h1>
 
                 <button onClick={ () => authorize() } disabled={ loading } className="flex mx-auto  transition hover:scale-105 active:scale-100 ">

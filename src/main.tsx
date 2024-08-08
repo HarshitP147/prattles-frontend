@@ -7,7 +7,7 @@ import 'javascript-time-ago/load-all-locales'
 
 import router from './misc/router'
 
-const googleClientId = import.meta.env.GOOGLE_OAUTH_CLIENTID;
+const googleClientId = import.meta.env.VITE_GOOGLE_OAUTH_CLIENTID;
 
 import './index.css'
 

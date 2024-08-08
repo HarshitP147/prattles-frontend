@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs } from "react-router-dom";
 
 async function chatListLoader(args: LoaderFunctionArgs) {
-    const url = `http://localhost:8080/chat/${args.params.chatId}`;
+    const url = `https://mern-chat-backend-emnj.onrender.com/chat/${args.params.chatId}`;
 
     const controller = new AbortController();
     const signal = controller.signal;
