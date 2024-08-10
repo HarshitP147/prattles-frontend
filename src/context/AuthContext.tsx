@@ -1,4 +1,5 @@
 import { ReactNode, useReducer, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 // import AuthContext from "./AuthContext";
 import { authReducer } from "./authReducer";
@@ -26,6 +27,7 @@ const AuthContext = createContext<AuthType>({
 function AuthProvider({ children }: { children: ReactNode }) {
     const [auth, dispatchAuth] = useReducer(authReducer, initialAuthState);
 
+    const nav = useNavigate();
 
     const login = async (token: string) => {
         const userAuthRequest = await fetch(`https://mern-chat-backend-emnj.onrender.com/auth`, {
@@ -54,6 +56,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
                 data: userInfoRequest
             }
         })
+
+        nav("/chat");
     }
 
     const logout = () => {

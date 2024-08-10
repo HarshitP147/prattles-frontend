@@ -25,3 +25,5 @@ dist-ssr
 .env
 
 google-oauth-setting.json
+# Local Netlify folder
+.netlify

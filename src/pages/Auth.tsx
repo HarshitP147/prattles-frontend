@@ -14,10 +14,10 @@ export default function Auth() {
         flow: "implicit",
         onSuccess: (tokenRespose) => {
             login(tokenRespose.access_token);
-            setLoading(false);
         },
         onError: (error) => {
             console.error(error);
+            setLoading(false);
         }
     })
 
