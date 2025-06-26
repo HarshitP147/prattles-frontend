@@ -42,9 +42,20 @@ export default function NewUserDialog() {
         ele.showModal();
     }
 
+    function closeDialog() {
+        const modal = document.getElementById('newUserModal') as HTMLDialogElement;
+        modal.close();
+    }
+
     return (
         <dialog id="newUserModal" className="modal">
-            <div className="modal-box bg-white text-black">
+            <div className="modal-box bg-white text-black relative">
+                <button
+                    onClick={ closeDialog }
+                    className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                >
+                    ✕
+                </button>
                 <h1 className="text-lg text-primary-content ">Type the email of the user you want to start the chat with</h1>
                 <label className="input input-primary  bg-white  flex items-center mt-3">
                     <HiUserAdd className=" mr-4 h-[80%] w-fit" />
